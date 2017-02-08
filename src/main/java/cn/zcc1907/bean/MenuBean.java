@@ -18,18 +18,22 @@ public class MenuBean {
 	
 	private List<MenuBean> children;//下级菜单
 	
-	public void setChildren(List<MenuBean> children) {
-		this.children = children;
-	}
-
-	public List<MenuBean> getChildren() {
-		return children;
-	}
-
 	private String path;//菜单对应页面js文件地址
 	
 	private boolean leaf;//该菜单项是否为叶子结点
+	
+	private String icon;
+	
+	private short order;
 
+	public void setChildren(List<MenuBean> children) {
+		this.children = children;
+	}
+	
+	public List<MenuBean> getChildren() {
+		return children;
+	}
+	
 	public boolean isLeaf() {
 		return leaf;
 	}
@@ -68,6 +72,28 @@ public class MenuBean {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public short getOrder() {
+		return order;
+	}
+
+	public void setOrder(short order) {
+		this.order = order;
+	}
+
+	@Override
+	public String toString() {
+		return "MenuBean [id=" + id + ", text=" + text + ", parent=" + parent + ", children=" + children + ", path="
+				+ path + ", leaf=" + leaf + ", icon=" + icon + ", order=" + order + "]";
 	}
 	
 }

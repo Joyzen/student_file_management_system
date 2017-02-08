@@ -98,7 +98,7 @@
             <div class="span3"  id="menuSpan">
             	<div class="sidebar-nav">
                 <template v-for="f in children">
-                  	<div class="nav-header" data-toggle="collapse" :data-target="'#' + f.id"><i class="icon-dashboard"></i>{{f.text}}</div>
+                  	<div class="nav-header" data-toggle="collapse" :data-target="'#' + f.id"><i :class="f.icon"></i>{{f.text}}</div>
 					<ul :id="f.id" class="nav nav-list collapse in">
 					    <li v-for="c in f.children"><a href="menu/index">{{c.text}}</a></li>
 					</ul>
@@ -106,8 +106,8 @@
             </div>
         </div>
         <div class="span9">
-            <script type="text/javascript" th:src="@{/lib/jqplot/jquery.jqplot.min.js}"></script>
-<script type="text/javascript" charset="utf-8" th:src="@{/javascripts/graphDemo.js}"></script>
+        <script type="text/javascript" th:src="@{/lib/jqplot/jquery.jqplot.min.js}"></script>
+		<script type="text/javascript" charset="utf-8" th:src="@{/javascripts/graphDemo.js}"></script>
 
 <div class="stats">
     <p class="stat"><span class="number">53</span>张票</p>
