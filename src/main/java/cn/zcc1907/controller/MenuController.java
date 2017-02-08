@@ -1,13 +1,10 @@
 package cn.zcc1907.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.zcc1907.bean.Category;
@@ -32,16 +29,16 @@ public class MenuController {
 	
 	@RequestMapping("/g")
 	@ResponseBody
-	public Category getMenu(@RequestParam(required=false)String menuId){
+	public Category getMenu(){
 		return cd.load("root");
 	}
 	
-	@RequestMapping("/test")
+	@RequestMapping("/load")
 	@ResponseBody
-	public String test(){
-		List<MenuBean> m = md.selectMenuByCondition("root");
+	public MenuBean test(){
+		MenuBean m = md.load("root");
 		logger.info(m.toString());
-		return m.toString();
+		return m;
 	}
 	
 	@RequestMapping("/index")

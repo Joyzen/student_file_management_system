@@ -25,7 +25,7 @@
 	        },
 	        methods: {
 	    		getCustomers: function() {
-	    			this.$http.get([[@{/menu/g}]])
+	    			this.$http.get([[@{/menu/load}]])
 	    				.then((response) => {
 	    					this.$set(this,'cname',response.data.cname);
 	    					this.$set(this,'children',response.data.children);
@@ -37,8 +37,8 @@
 	    		}
 	    	},
 	        data: {
-	        	//cname:{},
-	        	children:{cname:''},
+	        	//text:{},
+	        	children:{},
 	        }
 	    });
     });
@@ -87,51 +87,22 @@
                     </li>
                     
                 </ul>
-                <a class="brand" href="index.html"><span class="first"></span> <span class="second">WinterAdmin</span></a>
+                <a class="brand" href="index.html"><span class="first"></span> <span class="second">学生档案管理系统</span></a>
             </div>
         </div>
     </div>
     
 
     <div class="container-fluid">
-        
         <div class="row-fluid">
             <div class="span3"  id="menuSpan">
-                <div class="sidebar-nav">
-                  <div class="nav-header" data-toggle="collapse" data-target="#dashboard-menu"><i class="icon-dashboard"></i>{{cname}}</div>
-                    <ul id="dashboard-menu" class="nav nav-list collapse in">
-                        <li v-for="c in children"><a href="index.html">{{c.cname}}</a></li>
-                    </ul>
-                  <div class="nav-header" data-toggle="collapse" data-target="#dashboard-menu"><i class="icon-dashboard"></i>控制台</div>
-                    <ul id="dashboard-menu" class="nav nav-list collapse in">
-                        <li><a href="index.html">首页</a></li>
-                        <li ><a href="users.html">列表页面</a></li>
-                        <li ><a href="user.html">表单页面</a></li>
-                        <li ><a href="gallery.html">相册展示</a></li>
-                        <li ><a href="calendar.html">日历</a></li>
-                        <li ><a href="faq.html">答疑</a></li>
-                        <li ><a href="help.html">帮助</a></li>
-                    </ul>
-                <div class="nav-header" data-toggle="collapse" data-target="#accounts-menu"><i class="icon-briefcase"></i>账号相关<span class="label label-info">+10</span></div>
-                <ul id="accounts-menu" class="nav nav-list collapse in">
-                  <li ><a href="sign-in.html">登录页面</a></li>
-                  <li ><a href="sign-up.html">注册页面</a></li>
-                  <li ><a href="reset-password.html">重置密码</a></li>
-                </ul>
-
-                <div class="nav-header" data-toggle="collapse" data-target="#settings-menu"><i class="icon-exclamation-sign"></i>错误页面</div>
-                <ul id="settings-menu" class="nav nav-list collapse in">
-                  <li ><a href="403.html">403错误页面</a></li>
-                  <li ><a href="404.html">404错误页面</a></li>
-                  <li ><a href="500.html">500错误页面</a></li>
-                  <li ><a href="503.html">503错误页面</a></li>
-                </ul>
-
-                <div class="nav-header" data-toggle="collapse" data-target="#legal-menu"><i class="icon-legal"></i>其他页面</div>
-                <ul id="legal-menu" class="nav nav-list collapse in">
-                  <li ><a href="privacy-policy.html">隐私声明</a></li>
-                  <li ><a href="terms-and-conditions.html">条件和协议</a></li>
-                </ul>
+            	<div class="sidebar-nav">
+                <template v-for="f in children">
+                  	<div class="nav-header" data-toggle="collapse" :data-target="'#' + f.id"><i class="icon-dashboard"></i>{{f.text}}</div>
+					<ul :id="f.id" class="nav nav-list collapse in">
+					    <li v-for="c in f.children"><a href="menu/index">{{c.text}}</a></li>
+					</ul>
+                </template>
             </div>
         </div>
         <div class="span9">
@@ -288,8 +259,8 @@
 <footer>
     <hr>
 	    <!-- Purchase a site license to remove this link from the footer: http://www.portnine.com/bootstrap-themes -->
-	    <p class="pull-right">免费Bootstrap模板主题WinterAdmin</p>        
-	    <p>&copy; 2012 <a href="#">WinterAdmin</a></p>
+	    <p class="pull-right">Joyzen's site</p>        
+	    <p>&copy; 2017 <a href="#">Joyzen</a></p>
     </hr>
 </footer>
     <!-- Le javascript

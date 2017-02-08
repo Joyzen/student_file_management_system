@@ -7,28 +7,20 @@
 			 <result property="text" column="text" />
 			 <result property="parent" column="parent" />
 			 <result property="path" column="path"/>
-			 <collection property="children" column="id" select="cn.zcc1907.dao.MenuDao.selectMenuChildren" />
+			 <collection column="id" property="children" select="cn.zcc1907.dao.MenuDao.findByParent" />
 		</resultMap>
 	<!-- 根据条件搜索管菜单数据 -->
-	<select id="selectMenuByCondition" parameterType="Map"
+	<select id="load" parameterType="string"
 		resultMap="MenuResultMap">
 		select * from menu
-		<where>
-			<if test="_parameter!='' and _parameter!=null">
-				and id=#{id,jdbcType=VARCHAR}
-			</if>
-		</where>
+				where id=#{id}
 	</select>
 	
-	<!-- 根据ID查找子菜单项 -->
-	<select id="selectMenuChildren" parameterType="string"
+	<!-- 根据父菜单ID查找子菜单 -->
+	<select id="findByParent" parameterType="string"
 		resultMap="MenuResultMap">
 		select * from menu
-		<where>
-			<if test="_parameter!='' and _parameter!=null">
-				and parent = #{id}
-			</if>
-		</where>
+				where parent=#{id}
 	</select>
 
 </mapper>

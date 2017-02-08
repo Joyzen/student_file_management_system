@@ -14,8 +14,8 @@ import cn.zcc1907.bean.MenuBean;
 @Mapper
 public interface MenuDao {
 
-	public List<MenuBean> selectMenuByCondition(String id);//根据传入条件查询
+	public MenuBean load(String id);//根据传入条件查询菜单及其子菜单项
 	
-	public List<MenuBean> selectMenuChildren(String id);//根据ID查找子菜单项
+	public List<MenuBean> findByParent(String id);//根据ID查找子菜单项
 	
 }

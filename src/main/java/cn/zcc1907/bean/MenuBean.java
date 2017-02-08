@@ -22,6 +22,10 @@ public class MenuBean {
 		this.children = children;
 	}
 
+	public List<MenuBean> getChildren() {
+		return children;
+	}
+
 	private String path;//菜单对应页面js文件地址
 	
 	private boolean leaf;//该菜单项是否为叶子结点
@@ -65,15 +69,5 @@ public class MenuBean {
 	public void setPath(String path) {
 		this.path = path;
 	}
-
-	@Override
-	public String toString() {
-		return "MenuBean [id=" + id + ", text=" + text + ", parent=" + parent + ", children=" + children + ", path="
-				+ path + ", leaf=" + leaf + "]";
-	}
-
-
-	
-	
 	
 }

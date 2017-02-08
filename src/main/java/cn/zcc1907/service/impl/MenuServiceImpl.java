@@ -17,12 +17,12 @@ public class MenuServiceImpl implements MenuService {
 
 	@Resource
 	MenuDao md;
-	
+
 	@Override
 	public List<MenuBean> getMenu() {
-		Map map = new HashMap<String, String>();
-		map.put("id", "root");
-		return md.selectMenuByCondition("root");
+		// TODO Auto-generated method stub
+		return null;
 	}
+	
 
 }
