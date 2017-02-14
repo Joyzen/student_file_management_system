@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.zcc1907.dao.MenuDao">
-		<resultMap type="MenuBean" id="MenuResultMap">
+		<resultMap type="cn.zcc1907.bean.MenuBean" id="MenuResultMap">
 			 <id property="id" column="id" />
 			 <result property="text" column="text" />
 			 <result property="parent" column="parent" />

@@ -65,7 +65,8 @@ public class DatabaseConfiguration implements EnvironmentAware {
       return druidDataSource; 
     } 
 
-    @Bean public SqlSessionFactory sqlSessionFactory() throws Exception { 
+    @Bean 
+    public SqlSessionFactory sqlSessionFactory() throws Exception { 
       SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean(); 
       sqlSessionFactoryBean.setDataSource(dataSource());
       sqlSessionFactoryBean.setTypeAliasesPackage("cn.zcc1907.bean");

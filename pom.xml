@@ -5,7 +5,7 @@
   <artifactId>student_file_management_system</artifactId>
   <packaging>jar</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>student_file_management_system Maven Webapp</name>
+  <name>student_file_management_system Maven</name>
   	<parent>  
 	    <groupId>org.springframework.boot</groupId> 
 	    <artifactId>spring-boot-starter-parent</artifactId>
@@ -86,7 +86,7 @@
 		<plugins>    
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin </artifactId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 				<dependencies>
 					<!--springloaded hot deploy -->
 					<dependency>
@@ -100,9 +100,9 @@
 						<goals>
 							<goal>repackage</goal>
 						</goals>
-						<configuration>
+						<!-- <configuration>
 							<classifier>exec</classifier>
-						</configuration>
+						</configuration> -->
 					</execution>
 				</executions>
 			</plugin>  
