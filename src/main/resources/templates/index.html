@@ -37,6 +37,7 @@
 	    	},
 	        data: {
 	        	children:{},
+	        	ctx:[[@{/}]]
 	        }
 	    });
     });
@@ -98,7 +99,7 @@
                 <template v-for="f in children">
                   	<div class="nav-header" data-toggle="collapse" :data-target="'#' + f.id"><i :class="f.icon"></i>{{f.text}}</div>
 					<ul :id="f.id" class="nav nav-list collapse in">
-					    <li v-for="c in f.children"><a href="menu/index">{{c.text}}</a></li>
+					    <li v-for="c in f.children"><a :href="ctx + c.path">{{c.text}}</a></li>
 					</ul>
                 </template>
             </div>

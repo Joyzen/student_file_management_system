@@ -18,4 +18,6 @@ public interface MenuDao {
 	
 	public List<MenuBean> findByParent(String id);//根据ID查找子菜单项
 	
+	public List<MenuBean> selectMenusByRoleId(String roleId);  //根据ID查询Menu
+	
 }

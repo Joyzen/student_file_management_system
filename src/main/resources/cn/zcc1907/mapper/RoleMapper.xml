@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zcc1907.dao.RoleDao">
+		<resultMap type="cn.zcc1907.bean.RoleBean" id="RoleResultMap">
+			 <id property="roleId" column="roleId" />
+			 <result property="roleName" column="roleName" />
+			 <result property="remark" column="remark" />
+			 <collection column="roleId" property="menus" select="cn.zcc1907.dao.MenuDao.selectMenusByRoleId" />
+		</resultMap>
+	<!-- 根据条件搜索管角色数据 -->
+	<select id="selectRoleByCondition" parameterType="Map"
+		resultMap="RoleResultMap">
+		select * from role
+				where roleId=#{roleId};
+	</select>
+	
+	<!-- 根据账户查询角色 -->
+	<select id="selectRoleByUserAccount" parameterType="string"
+		resultMap="RoleResultMap">
+		select * from role
+				where roleId in (
+					select roleId from userRole where userId=(
+						select userId from user where userAccount=#{userAccount}
+					)
+				);
+	</select>
+	
+	
+
+</mapper>

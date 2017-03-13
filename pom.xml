@@ -79,6 +79,22 @@
 			<version>1.2.7</version>
 		</dependency>
 		
+		<!-- 换用nekohtml解析模板 -->
+		<dependency>
+	    	<groupId>net.sourceforge.nekohtml</groupId>
+	    	<artifactId>nekohtml</artifactId>
+	    	<!-- <version>1.9.22</version> -->
+		</dependency>
+		<!-- 配置spring security结合thymeleaf进行权限管理 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security.oauth</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
+        </dependency>
+		
 	</dependencies>
 
 	<build>  
