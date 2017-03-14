@@ -27,13 +27,16 @@ import com.github.pagehelper.PageHelper;
 @EnableTransactionManagement
 @MapperScan(value = "cn.zcc1907.dao")
 public class DatabaseConfiguration implements EnvironmentAware { 
+	
     private Environment environment; 
     private RelaxedPropertyResolver propertyResolver; 
+    
     @Override 
     public void setEnvironment(Environment environment) { 
       this.environment = environment; 
       this.propertyResolver = new RelaxedPropertyResolver(environment,"spring.datasource."); 
     } 
+    
     //注册dataSource 
     @Bean(initMethod = "init", destroyMethod = "close") 
     public DruidDataSource dataSource() throws SQLException { 
@@ -84,7 +87,9 @@ public class DatabaseConfiguration implements EnvironmentAware {
       sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/cn/zcc1907/mapper/*.xml")); 
       return sqlSessionFactoryBean.getObject(); 
     } 
-    @Bean public PlatformTransactionManager transactionManager() throws SQLException { 
+    
+    @Bean 
+    public PlatformTransactionManager transactionManager() throws SQLException { 
       return new DataSourceTransactionManager(dataSource()); 
     }
 }

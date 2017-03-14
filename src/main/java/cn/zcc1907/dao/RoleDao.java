@@ -40,6 +40,6 @@ public interface RoleDao {
 	 * @param id
 	 * @return
 	 */
-	public List<Menu> selectRoleByUserAccount(String id);
+	public List<Menu> selectRoleByUserAccount(String userAccount);
 	
 }

@@ -11,6 +11,6 @@ public interface UserService extends UserDetailsService {
 	 * 根据账号查询User权限
 	 * @return
 	 */
-	public List<GrantedAuthority> getAuthoritiesByUserAccount();
+	public List<GrantedAuthority> getAuthoritiesByUserAccount(String userAccount);
 	
 }

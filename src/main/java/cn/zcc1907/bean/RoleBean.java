@@ -1,6 +1,5 @@
 package cn.zcc1907.bean;
 
-import java.awt.Menu;
 import java.util.List;
 
 public class RoleBean {
@@ -11,7 +10,7 @@ public class RoleBean {
 	
 	private String remark;
 	
-	private List<Menu> menus;
+	private List<MenuBean> menus;
 
 	public String getRoleId() {
 		return roleId;
@@ -37,11 +36,11 @@ public class RoleBean {
 		this.remark = remark;
 	}
 
-	public List<Menu> getMenus() {
+	public List<MenuBean> getMenus() {
 		return menus;
 	}
 
-	public void setMenus(List<Menu> menus) {
+	public void setMenus(List<MenuBean> menus) {
 		this.menus = menus;
 	}
 	

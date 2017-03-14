@@ -22,5 +22,12 @@
 		select * from menu
 				where parent=#{id}
 	</select>
+	
+	<select id="selectMenusByRoleId" parameterType="string"
+		resultMap="MenuResultMap">
+		select * from menu
+				where id in (
+					select menuId from rolemenu where roleId=#{roleId});
+	</select>
 
 </mapper>

@@ -26,6 +26,16 @@
 				);
 	</select>
 	
+	<insert id="insertRole" parameterType="RoleBean">
+		insert into role values(null,#{roleName},#{remark});
+	</insert>
 	
+	<delete id="delRole" parameterType="Map">
+		delete from role where roleId=#{roleId};
+	</delete>
+	
+	<update id="updateRole" parameterType="RoleBean">
+		update role set roleName=#{roleName},#{remark} where roleId=#{roleId};
+	</update>
 
 </mapper>

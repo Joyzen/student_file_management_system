@@ -1,8 +1,12 @@
 package cn.zcc1907.bean;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserBean implements UserDetails {
@@ -97,7 +101,17 @@ public class UserBean implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return null;
+		List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
+		Set<String> menuIds = new HashSet<String>();
+		for(RoleBean role:this.getRoles()){
+			for(MenuBean menu:role.getMenus()){
+				menuIds.add(menu.getId());//利用set的不可重复进行数据去重操作
+			}
+		}
+		for(String id:menuIds){
+			auths.add(new SimpleGrantedAuthority(id));
+		}
+		return auths;
 	}
 
 	@Override

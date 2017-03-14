@@ -21,7 +21,8 @@ public class DruidConfig {
     return reg; 
   } 
 
-  @Bean public FilterRegistrationBean filterRegistrationBean() { 
+  @Bean 
+  public FilterRegistrationBean filterRegistrationBean() { 
     FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(); 
     filterRegistrationBean.setFilter(new WebStatFilter()); 
     filterRegistrationBean.addUrlPatterns("/*"); 

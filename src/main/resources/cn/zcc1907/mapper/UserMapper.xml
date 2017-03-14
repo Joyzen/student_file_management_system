@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zcc1907.dao.UserDao">
+	<resultMap type="cn.zcc1907.bean.UserBean" id="UserResultMap">
+		 <id property="userId" column="userId" />
+		 <result property="userAccount" column="userAccount" />
+		 <result property="userName" column="userName" />
+		 <result property="password" column="password" />
+		 <result property="sex" column="sex" />
+		 <result property="email" column="email" />
+		 <result property="phone" column="phone" />
+		 <result property="useFlag" column="useFlag" />
+		 <collection column="userAccount" property="roles" select="cn.zcc1907.dao.RoleDao.selectRoleByUserAccount" />
+	</resultMap>
+	
+	<!-- 根据条件搜索管用户数据 -->
+	<select id="selectUserByCondition" parameterType="Map"
+		resultMap="UserResultMap">
+		select * from user
+				where userAccount=#{userAccount};
+	</select>
+	
+	<insert id="insertUser" parameterType="UserBean">
+		insert into user values(null,#{userAccount},#{userName},#{password},
+			#{sex},#{email},#{phone},#{useFlag});
+	</insert>
+	
+	<delete id="delUser" parameterType="Map">
+		delete from user where userId=#{userId};
+	</delete>
+	
+	<update id="updateUserById" parameterType="UserBean">
+		update user set userAccount=#{userAccount},userName=#{userName},
+			password=#{password},sex=#{sex},email=#{email},phone=#{phone},
+			useFlag=#{useFlag} 
+				where userId=#{userId};
+	</update>
+
+</mapper>

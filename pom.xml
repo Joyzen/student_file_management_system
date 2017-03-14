@@ -83,17 +83,17 @@
 		<dependency>
 	    	<groupId>net.sourceforge.nekohtml</groupId>
 	    	<artifactId>nekohtml</artifactId>
-	    	<!-- <version>1.9.22</version> -->
+	    	<version>1.9.22</version>
 		</dependency>
 		<!-- 配置spring security结合thymeleaf进行权限管理 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        <dependency>
+        <!-- <dependency>
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
-        </dependency>
+        </dependency> -->
 		
 	</dependencies>
 
@@ -108,7 +108,7 @@
 					<dependency>
 						<groupId>org.springframework</groupId>
 						<artifactId>springloaded</artifactId>
-						<version>1.2.4.RELEASE</version>
+						<version>1.2.6.RELEASE</version>
 					</dependency>
 				</dependencies>
 				<executions>
@@ -122,29 +122,6 @@
 					</execution>
 				</executions>
 			</plugin>  
-			<!-- <plugin>
-            <artifactId>maven-resources-plugin</artifactId>
-            <executions>
-                <execution>
-                    <id>copy-frontend-resources</id>
-                       <phase>process-resources</phase>
-                    <goals>
-                        <goal>copy-resources</goal>
-                    </goals>
-                    <configuration>
-                        <outputDirectory>${basedir}/target/classes/static</outputDirectory>
-                        <resources>
-                            <resource>
-                                <directory>${basedir}/target/build</directory>
-
-                                <filtering>false</filtering> SET TO FALSE TO PREVENT RESOURCES CORRUPTION
-
-                            </resource>
-                        </resources>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin> -->
 		</plugins> 
 		
 	</build>
