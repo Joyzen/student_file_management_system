@@ -9,22 +9,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 import cn.zcc1907.bean.UserBean;
 import cn.zcc1907.dao.MenuDao;
 import cn.zcc1907.dao.RoleDao;
 import cn.zcc1907.dao.UserDao;
 import cn.zcc1907.service.UserService;
+import cn.zcc1907.util.Configs;
 
+@Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserDao ud;
-	@Autowired
-	RoleDao rd;
-	@Autowired
-	MenuDao md;
 	
+	/**
+	 * spring security用户验证方法实现
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Map<String,String> map = new HashMap<String,String>();
@@ -39,8 +44,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<GrantedAuthority> getAuthoritiesByUserAccount(String userAccount) {
-		return null;
+	public Page<UserBean> getUserList(Map map) {
+		Page<UserBean> page = PageHelper.startPage((Integer)map.get("pageNum"), Configs.pageSzie);
+		ud.selectUserByCondition(map);
+		return page;
 	}
+
 
 }

@@ -1,16 +1,20 @@
 package cn.zcc1907.service;
 
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
+
+import com.github.pagehelper.Page;
+
+import cn.zcc1907.bean.UserBean;
 
 public interface UserService extends UserDetailsService {
 
+	
 	/**
-	 * 根据账号查询User权限
-	 * @return
+	 * 获取用户信息列表
 	 */
-	public List<GrantedAuthority> getAuthoritiesByUserAccount(String userAccount);
+	public Page<UserBean> getUserList(Map map);
 	
 }

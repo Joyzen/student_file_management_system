@@ -50,6 +50,9 @@
 		        <div class="block">
 		            <div class="block-heading">登录</div>
 		            <div class="block-body">
+		            	<div class="alert alert-error" th:if="${param.error}">
+						  账户或密码错误！
+						</div>
 		                <form name='f' method="post" th:action="@{/login}">
 		                    <label>用户名</label>
 		                    <input name="username" type="text" class="span12"></input>

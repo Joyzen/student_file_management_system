@@ -18,7 +18,11 @@
 	<select id="selectUserByCondition" parameterType="Map"
 		resultMap="UserResultMap">
 		select * from user
-				where userAccount=#{userAccount};
+			<where>
+				<if test="userAccount!=null and userAccount!=''">
+					userAccount=#{userAccount};
+				</if>
+			</where>
 	</select>
 	
 	<insert id="insertUser" parameterType="UserBean">

@@ -32,11 +32,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/resources/**", "/stylesheets/**",
                 		"/images/**","javascripts/**","/lib/**","/login"
-                		,"logout"
+                		,"/logout"
                 		).permitAll()//配置不需要进行权限管理的目录
                 .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").failureUrl("/403").permitAll()
-                .and().logout().permitAll();
+                .and().formLogin().loginPage("/login").failureUrl("/login?error")
+                .defaultSuccessUrl("/index").permitAll()
+                .and().logout().logoutUrl("/index").permitAll();
     }
 	
 }

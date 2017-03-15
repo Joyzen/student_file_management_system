@@ -83,7 +83,6 @@
 		<dependency>
 	    	<groupId>net.sourceforge.nekohtml</groupId>
 	    	<artifactId>nekohtml</artifactId>
-	    	<version>1.9.22</version>
 		</dependency>
 		<!-- 配置spring security结合thymeleaf进行权限管理 -->
         <dependency>

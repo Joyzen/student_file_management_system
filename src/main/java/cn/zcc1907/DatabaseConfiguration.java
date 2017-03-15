@@ -78,6 +78,7 @@ public class DatabaseConfiguration implements EnvironmentAware {
       Properties props = new Properties(); 
       props.setProperty("dialect", "mysql"); 
       props.setProperty("reasonable", "true"); 
+      props.setProperty("pageSizeZero", "true"); 
       props.setProperty("supportMethodsArguments", "true"); 
       props.setProperty("returnPageInfo", "check"); 
       props.setProperty("params", "count=countSql"); 

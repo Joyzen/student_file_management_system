@@ -13,8 +13,8 @@
     <link rel="stylesheet" th:href="@{/lib/font-awesome/css/font-awesome.css}"></link>
 	
     <script  th:src="@{/lib/jquery-1.8.1.min.js}" type="text/javascript"></script>
-    <script  th:src="@{/vue.js}" type="text/javascript"></script>
-    <script  th:src="@{/vue-resource.min.js}" type="text/javascript"></script>
+    <script  th:src="@{/javascripts/vue.js}" type="text/javascript"></script>
+    <script  th:src="@{/javascripts/vue-resource.min.js}" type="text/javascript"></script>
     
     <script th:inline="javascript">
     $(function () {	
@@ -81,7 +81,7 @@
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" href="#">设置</a></li>
                             <li class="divider"></li>
-                            <li><a tabindex="-1" href="sign-in.html">退出</a></li>
+                            <li><a tabindex="-1" th:href="@{/login}">退出</a></li>
                         </ul>
                     </li>
                     
@@ -257,13 +257,12 @@
 	</div>
 	<footer th:fragment="footer">
 	    <hr>
-		    <!-- Purchase a site license to remove this link from the footer: http://www.portnine.com/bootstrap-themes -->
 		    <p class="pull-right">Joyzen's site</p>        
 		    <p>&copy; 2017 <a href="#">Joyzen</a></p>
 	    </hr>
+	<script th:src="@{/lib/bootstrap/js/bootstrap.js}"></script>
 	</footer>
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script th:src="@{/lib/bootstrap/js/bootstrap.js}"></script>
 </body>
 </html>
 
