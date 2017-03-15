@@ -13,7 +13,7 @@
         <div class="row-fluid">
             <div class="span3" id="menuSpan" th:include="index::menu"></div>
         <div class="span9">
-        	<h1 class="page-title">Users</h1>
+        	<h1 class="page-title">用户信息</h1>
 			<div class="btn-toolbar">
 			    <button class="btn btn-primary"><i class="icon-plus"></i> New User</button>
 			    <button class="btn">Import</button>
@@ -55,10 +55,10 @@
 			<div class="pagination">
 			    <ul>
 			        <li><a href="#">前一页</a></li>
-			        <li th:each="page,stat:${pages}">
-			        	<a th:text="${page}" href="#">888</a>
+			        <li th:each="page:${pages}">
+			        	<a th:text="${page}+1" href="#">888</a>
 			        </li>
-			        <li class="active"><a href="#">下一页</a></li>
+			        <li><a href="#">下一页</a></li>
 			    </ul>
 			</div>
 </div>
