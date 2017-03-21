@@ -8,6 +8,7 @@ import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.context.EnvironmentAware;
@@ -15,16 +16,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.PageHelper;
 
 @Configuration
-@EnableTransactionManagement
+//@EnableTransactionManagement
 @MapperScan(value = "cn.zcc1907.dao")
 public class DatabaseConfiguration implements EnvironmentAware { 
 	
@@ -67,6 +65,14 @@ public class DatabaseConfiguration implements EnvironmentAware {
       druidDataSource.setFilters(propertyResolver.getProperty("filters")); 
       return druidDataSource; 
     } 
+    
+    @Bean
+    public MapperScannerConfigurer mapperScannerConfigurer() throws Exception {
+    	MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
+    	mapperScannerConfigurer.setBasePackage("cn.zcc1907.dao");
+    	mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactoryBean");
+    	return mapperScannerConfigurer;
+    }
 
     @Bean 
     public SqlSessionFactory sqlSessionFactory() throws Exception { 
@@ -89,8 +95,8 @@ public class DatabaseConfiguration implements EnvironmentAware {
       return sqlSessionFactoryBean.getObject(); 
     } 
     
-    @Bean 
+    /*@Bean 
     public PlatformTransactionManager transactionManager() throws SQLException { 
       return new DataSourceTransactionManager(dataSource()); 
-    }
+    }*/
 }
