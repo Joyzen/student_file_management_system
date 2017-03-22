@@ -4,11 +4,11 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Properties;
 
+import org.apache.ibatis.io.VFS;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
-import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.context.EnvironmentAware;
@@ -16,15 +16,20 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.PageHelper;
 
+import cn.zcc1907.util.SpringBootVFS;
+
 @Configuration
-//@EnableTransactionManagement
+@EnableTransactionManagement
 @MapperScan(value = "cn.zcc1907.dao")
-public class DatabaseConfiguration implements EnvironmentAware { 
+public class DatabaseConfiguration implements EnvironmentAware  { 
 	
     private Environment environment; 
     private RelaxedPropertyResolver propertyResolver; 
@@ -66,19 +71,16 @@ public class DatabaseConfiguration implements EnvironmentAware {
       return druidDataSource; 
     } 
     
-    @Bean
-    public MapperScannerConfigurer mapperScannerConfigurer() throws Exception {
-    	MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-    	mapperScannerConfigurer.setBasePackage("cn.zcc1907.dao");
-    	mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactoryBean");
-    	return mapperScannerConfigurer;
-    }
 
-    @Bean 
+    @Bean(name="sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory() throws Exception { 
-      SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean(); 
-      sqlSessionFactoryBean.setDataSource(dataSource());
-      sqlSessionFactoryBean.setTypeAliasesPackage("cn.zcc1907.bean");
+      /**
+       * 重写VFS类，解决打包成jar后不能扫描bean的问题
+       */
+      VFS.addImplClass(SpringBootVFS.class);
+      
+      SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean(); 
+      sqlSessionFactory.setDataSource(dataSource());
       //mybatis分页 
       PageHelper pageHelper = new PageHelper();
       Properties props = new Properties(); 
@@ -89,14 +91,17 @@ public class DatabaseConfiguration implements EnvironmentAware {
       props.setProperty("returnPageInfo", "check"); 
       props.setProperty("params", "count=countSql"); 
       pageHelper.setProperties(props); //添加插件 
-      sqlSessionFactoryBean.setPlugins(new Interceptor[]{pageHelper}); 
+      sqlSessionFactory.setPlugins(new Interceptor[]{pageHelper}); 
       PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(); 
-      sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/cn/zcc1907/mapper/*.xml")); 
-      return sqlSessionFactoryBean.getObject(); 
-    } 
+      sqlSessionFactory.setTypeAliasesPackage("cn.zcc1907.bean");
+      sqlSessionFactory.setMapperLocations(resolver.getResources("classpath:/cn/zcc1907/mapper/*.xml")); 
+      return sqlSessionFactory.getObject(); 
+    }
+
     
-    /*@Bean 
+    @Bean 
     public PlatformTransactionManager transactionManager() throws SQLException { 
       return new DataSourceTransactionManager(dataSource()); 
-    }*/
+    }
+
 }
