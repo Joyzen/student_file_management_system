@@ -28,15 +28,19 @@ public class Configs {
 	 * @param total  总页数
 	 * @return
 	 */
-	public static List<String> getPagination(int pageNum,int total){
+	public static List<String> getPaginations(int pageNum,int total){
 		List<String> l = new ArrayList<String>();
 		int start = pageNum-(pages-1)/2;
 		int end = pageNum+(pages-1)/2;
-		if(start<0){
-			start = 0;
-			end = pages-1;
-		}else if(end>total){
-			start = (int)total+1-pages;
+		if(start<1){
+			start = 1;
+			if((total/pageSzie+1)<pages){
+				end = total/pageSzie+1;
+			}else{
+				end = pages;
+			}
+		}
+		if(end>total){
 			end = total;
 		}
 		for(;start<=end;start++){
