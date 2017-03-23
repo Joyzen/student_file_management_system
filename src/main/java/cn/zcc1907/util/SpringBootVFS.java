@@ -6,6 +6,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.io.VFS;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -20,6 +22,7 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 public class SpringBootVFS extends VFS {
 
 	private final ResourcePatternResolver resourceResolver;
+	private static final Log log = LogFactory.getLog(SpringBootVFS.class);
 
 	public SpringBootVFS() {
 		this.resourceResolver = new PathMatchingResourcePatternResolver(getClass().getClassLoader());

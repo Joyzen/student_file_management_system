@@ -81,6 +81,7 @@ public class DatabaseConfiguration implements EnvironmentAware  {
       
       SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean(); 
       sqlSessionFactory.setDataSource(dataSource());
+      //sqlSessionFactory.setVfs(SpringBootVFS.class);
       //mybatis分页 
       PageHelper pageHelper = new PageHelper();
       Properties props = new Properties(); 

@@ -41,7 +41,7 @@ public class UserController {
 		model.addAttribute("users",page.getResult());
 		model.addAttribute("pages",Configs.getPagination(pageNum,(int)page.getTotal()));
 		model.addAttribute("pageNum",pageNum);
-		return "/user/users";
+		return "user/users";
 	}
 	
 }
