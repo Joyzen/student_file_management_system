@@ -19,6 +19,9 @@
 		resultMap="UserResultMap">
 		select * from user
 			<where>
+				<if test="userId!=null and userId!=''">
+					userId=#{userId};
+				</if>
 				<if test="userAccount!=null and userAccount!=''">
 					userAccount=#{userAccount};
 				</if>

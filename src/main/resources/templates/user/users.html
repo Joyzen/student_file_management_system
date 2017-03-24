@@ -4,7 +4,6 @@
   </head>
 
   <body> 
-  <!--<![endif]-->
     
     <div class="navbar" th:include="index::navbar"></div>
     
@@ -12,69 +11,69 @@
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span3" id="menuSpan" th:include="index::menu"></div>
-        <div class="span9">
-        	<h1 class="page-title">用户信息</h1>
-			<div class="btn-toolbar">
-			    <button class="btn btn-primary"><i class="icon-plus"></i> New User</button>
-			    <button class="btn">Import</button>
-			    <button class="btn">Export</button>
-			  	<div class="btn-group"></div>
+	        <div class="span9">
+	        	<h1 class="page-title">用户信息</h1>
+				<div class="btn-toolbar">
+				    <button class="btn btn-primary"><i class="icon-plus"></i> New User</button>
+				    <button class="btn">Import</button>
+				    <button class="btn">Export</button>
+				  	<div class="btn-group"></div>
+				</div>
+				<div class="well">
+				    <table class="table">
+				      <thead>
+				        <tr>
+				          <th>#</th>
+				          <th>账号</th>
+				          <th>姓名</th>
+				          <th>性别</th>
+				          <th>邮箱</th>
+				          <th>电话</th>
+				          <th>状态</th>
+				          <th style="width: 26px;"></th>
+				        </tr>
+				      </thead>
+				      <tbody>
+				        <tr th:each="user,stat:${users}">
+				          <td th:text="${user.userId}">#</td>
+				          <td th:text="${user.userAccount}">账号</td>
+				          <td th:text="${user.userName}">姓名</td>
+				          <td th:text="${user.sex}">性别</td>
+				          <td th:text="${user.email}">邮箱</td>
+				          <td th:text="${user.phone}">电话</td>
+				          <td th:text="${user.useFlag}">状态</td>
+				          <td>
+				              <a th:href="@{/user/user?(userId=${user.userId})}"><i class="icon-pencil"></i></a>
+				              <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+				          </td>
+				        </tr>
+				      </tbody>
+				    </table>
+				</div>
+			
+				<div class="pagination">
+				    <ul>
+				        <li><a th:href="@{/user/users(pageNum=${prePage})}">前一页</a></li>
+				        <li th:each="page:${pages}">
+				        	<a th:text="${page}" th:href="@{/user/users(pageNum=${page})}">888</a>
+				        </li>
+				        <li><a th:href="@{/user/users(pageNum=${nextPage})}">下一页</a></li>
+				    </ul>
+				</div>
 			</div>
-			<div class="well">
-			    <table class="table">
-			      <thead>
-			        <tr>
-			          <th>#</th>
-			          <th>账号</th>
-			          <th>姓名</th>
-			          <th>性别</th>
-			          <th>邮箱</th>
-			          <th>电话</th>
-			          <th>状态</th>
-			          <th style="width: 26px;"></th>
-			        </tr>
-			      </thead>
-			      <tbody>
-			        <tr th:each="user,stat:${users}">
-			          <td th:text="${user.userId}">#</td>
-			          <td th:text="${user.userAccount}">账号</td>
-			          <td th:text="${user.userName}">姓名</td>
-			          <td th:text="${user.sex}">性别</td>
-			          <td th:text="${user.email}">邮箱</td>
-			          <td th:text="${user.phone}">电话</td>
-			          <td th:text="${user.useFlag}">状态</td>
-			          <td>
-			              <a href="user.html"><i class="icon-pencil"></i></a>
-			              <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-			          </td>
-			        </tr>
-			      </tbody>
-			    </table>
+			<div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    			<div class="modal-header">
+        			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        			<h3 id="myModalLabel">Delete Confirmation</h3>
+    			</div>
+			    <div class="modal-body">
+			        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+			    </div>
+			    <div class="modal-footer">
+			        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+			        <button class="btn btn-danger" data-dismiss="modal">Delete</button>
+			    </div>
 			</div>
-		
-			<div class="pagination">
-			    <ul>
-			        <li><a th:href="@{/user/users(pageNum=${prePage})}">前一页</a></li>
-			        <li th:each="page:${pages}">
-			        	<a th:text="${page}" th:href="@{/user/users(pageNum=${page})}">888</a>
-			        </li>
-			        <li><a th:href="@{/user/users(pageNum=${nextPage})}">下一页</a></li>
-			    </ul>
-			</div>
-</div>
-<div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Delete Confirmation</h3>
-    </div>
-    <div class="modal-body">
-        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <button class="btn btn-danger" data-dismiss="modal">Delete</button>
-    </div>
-</div>
         </div>
     </div>
     <footer  th:include="index::footer"></footer>

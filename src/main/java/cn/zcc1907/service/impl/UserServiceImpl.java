@@ -36,9 +36,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	//查询用户
 	public List<UserBean> getUserList(UserBean userBean) {
 		
-		Map<String,String> map = new HashMap<String,String>();
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("userId", userBean.getUserId());
 		
 		List<UserBean> lu = ud.selectUserByCondition(map);
 		

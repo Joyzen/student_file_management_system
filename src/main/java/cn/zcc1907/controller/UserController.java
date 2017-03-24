@@ -1,5 +1,7 @@
 package cn.zcc1907.controller;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,21 @@ public class UserController {
 		Configs.setPagination(model, pageNum, page.getPages()); //调用公共方法设置分页所需参数
 		
 		return "user/users";
+	}
+	
+	@RequestMapping("/user")
+	public String toUser(String userId,Model model){
+		
+		UserBean userBean = new UserBean();
+		userBean.setUserId(userId);
+		
+		List<UserBean> lu = us.getUserList(userBean);
+		
+		if(lu.size()==1){
+			model.addAttribute("user", lu.get(0));
+		}
+		
+		return "user/user";
 	}
 	
 }
