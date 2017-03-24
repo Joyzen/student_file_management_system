@@ -54,11 +54,11 @@
 		
 			<div class="pagination">
 			    <ul>
-			        <li><a th:href="@{/user/users(pageNum=${(pageNum-1)>0}?(${pageNum}-1):1)}">前一页</a></li>
+			        <li><a th:href="@{/user/users(pageNum=${prePage})}">前一页</a></li>
 			        <li th:each="page:${pages}">
 			        	<a th:text="${page}" th:href="@{/user/users(pageNum=${page})}">888</a>
 			        </li>
-			        <li><a th:href="@{/user/users(pageNum=${(pageNum+1)>total}?${total}:${pageNum+1})}">下一页</a></li>
+			        <li><a th:href="@{/user/users(pageNum=${nextPage})}">下一页</a></li>
 			    </ul>
 			</div>
 </div>
@@ -83,6 +83,7 @@
     		$("a").each(function(){
        			if($(this).html()=='[[${pageNum}]]'){
        				$(this).parent().attr("class","active");
+       				$(this).attr("href","javascript:");
        			}
     		})
     	})

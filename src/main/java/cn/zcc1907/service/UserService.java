@@ -15,6 +15,6 @@ public interface UserService extends UserDetailsService {
 	/**
 	 * 获取用户信息列表
 	 */
-	public Page<UserBean> getUserList(Map map);
+	public List<UserBean> getUserList(UserBean userBean);
 	
 }
