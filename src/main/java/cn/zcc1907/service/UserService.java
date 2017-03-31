@@ -17,4 +17,11 @@ public interface UserService extends UserDetailsService {
 	 */
 	public List<UserBean> getUserList(UserBean userBean);
 	
+	/**
+	 * 更新用户资料
+	 * @param userBean
+	 * @return
+	 */
+	public boolean updateUser(UserBean userBean);
+	
 }

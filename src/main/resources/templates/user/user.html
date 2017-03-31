@@ -12,8 +12,8 @@
         	<div class="span9">
             	<h1 class="page-title">Edit User</h1>
 				<div class="btn-toolbar">
-    				<button class="btn btn-primary"><i class="icon-save"></i>保存修改</button>
-    				<a href="#myModal" data-toggle="modal" class="btn">重置</a>
+    				<button id="saveButton" class="btn btn-primary"><i class="icon-save"></i>保存修改</button>
+    				<a href="#myModal" id="reset" data-toggle="modal" class="btn">重置</a>
   					<div class="btn-group"></div>
 				</div>
 				<div class="well">
@@ -23,7 +23,7 @@
     				</ul>
     				<div id="myTabContent" class="tab-content center-block">
       					<div class="tab-pane active in" id="home">
-    						<form id="userForm">
+    						<form id="userForm" th:action="@{/user/update}" method="post">
 						        <label >用户ID</label>
 						        <p th:text="${user.userId}" class="form-control-static"></p>
 						        
@@ -71,7 +71,7 @@
 	  								<br/>
 	  								<p class="help-block">启用或停用账号</p>
 						        </div>
-						        
+						        <input type="hidden" name="userId" th:value="${user.userId}" />
    							</form>
 						</div>
       					<div class="tab-pane fade" id="profile">
@@ -121,24 +121,24 @@
     		}else{
     			$("#disable").attr("checked","checked");
     		}
-    		$("#userForm").bootstrapValidator({
-    			feedbackIcons: {
-	    			valid: 'glyphicon glyphicon-ok',
-	   				invalid: 'glyphicon glyphicon-remove',
-	    			validating: 'glyphicon glyphicon-refresh'
-				},
-		        //字段验证
-		        fields: {
-		        	userName: {
-		                validators: {
-		                    notEmpty: {
-		                        message: '用户名不能为空。'
-		                    },
-	                        threshold :  6 ,
-		                }
-	           		}
-		        }
-    		})
+    		
+    		//保存修改按钮绑定提交表单事件
+    		$("#saveButton").click(()=>{
+    				var data = $("#userForm").serializeArray();
+    				$.post([[@{/user/update}]],data,(result,status)=>{
+    					debugger;
+    					alert(result)
+    					debugger;
+    					if(result==='success'){
+    						debugger;
+    						$('#myModal').text('hahahahahahah');
+    						$('#myModal').modal();
+    						debugger;
+    					}
+    				})
+    			}
+    		)
+    		
     	})
     </script>
     

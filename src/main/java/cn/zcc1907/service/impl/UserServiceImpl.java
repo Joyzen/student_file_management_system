@@ -46,6 +46,16 @@ public class UserServiceImpl implements UserService {
 		
 		return lu;
 	}
+	
+	@Override
+	public boolean updateUser(UserBean userBean){
+		
+		if(ud.updateUserById(userBean)>-1){//
+			return true;
+		}
+		
+		return false;
+	}
 
 
 }
