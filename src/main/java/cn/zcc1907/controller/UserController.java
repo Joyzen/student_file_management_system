@@ -92,4 +92,34 @@ public class UserController {
 		return message;
 	}
 	
+	@RequestMapping(value="form",method=RequestMethod.GET)
+	public String form(){
+		return "user/form";
+	}
+	
+	@RequestMapping(value="updatePassword")
+	@ResponseBody
+	public String updatePassword(String npassword,String opassword,String uuserAccount){
+		String message = "";//返回信息
+		
+		UserBean userBean = new UserBean();
+		userBean.setPassword(opassword);
+		userBean.setUserAccount(uuserAccount);
+		
+		List<UserBean> lu = us.getUserList(userBean);
+		int result = lu.size();
+		
+		if(result==1){
+			userBean.setPassword(npassword);
+			userBean.setUserId(lu.get(0).getUserId());
+			
+			message = us.updateUser(userBean)?"success":"error";
+			
+		}else{
+			message = result<1?"fail":"error";
+		}
+		
+		return message;
+	}
+	
 }

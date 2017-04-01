@@ -20,10 +20,13 @@
 		select * from user
 			<where>
 				<if test="userId!=null and userId!=''">
-					userId=#{userId};
+					and userId=#{userId}  
 				</if>
 				<if test="userAccount!=null and userAccount!=''">
-					userAccount=#{userAccount};
+					and userAccount=#{userAccount}  
+				</if>
+				<if test="password!=null and password!=''">
+					and password=#{password} 
 				</if>
 			</where>
 	</select>
@@ -38,9 +41,16 @@
 	</delete>
 	
 	<update id="updateUserById" parameterType="UserBean">
-		update user set userAccount=#{userAccount},userName=#{userName},
-			password=#{password},sex=#{sex},email=#{email},phone=#{phone},
-			useFlag=#{useFlag} 
+		update user 
+			<set>
+				<if test="userAccount != null">userAccount=#{userAccount},</if>
+				<if test="userName != null">userName=#{userName},</if>
+				<if test="password != null">password=#{password},</if>
+				<if test="sex != null">sex=#{sex},</if>
+				<if test="email != null">email=#{email},</if>
+				<if test="phone != null">phone=#{phone},</if>
+				<if test="useFlag != null">useFlag=#{useFlag},</if>
+			</set>
 				where userId=#{userId};
 	</update>
 

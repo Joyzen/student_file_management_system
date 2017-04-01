@@ -41,6 +41,8 @@ public class UserServiceImpl implements UserService {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("userId", userBean.getUserId());
+		map.put("userAccount", userBean.getUserAccount());
+		map.put("password", userBean.getPassword());
 		
 		List<UserBean> lu = ud.selectUserByCondition(map);
 		
