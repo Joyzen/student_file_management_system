@@ -1,7 +1,8 @@
 package cn.zcc1907.controller;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.function.Function;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
@@ -120,6 +120,47 @@ public class UserController {
 		}
 		
 		return message;
+	}
+	
+	@RequestMapping("/delete")
+	@ResponseBody
+	public String delUser(String id){
+		String message = null;
+		
+		if(us.delUser(id)){
+			message = "success";
+		}else{
+			message = "fail";
+		}
+		
+		return message;
+	}
+	
+	
+	@RequestMapping("/toadd")
+	public String toAdd(Model model){
+		model.addAttribute("user", new UserBean());
+		return "user/user";
+	}
+	
+	@RequestMapping(value="add",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,String> addUser(UserBean user){
+		
+		Map<String,String> map = new HashMap<String,String>();
+		
+		String message = null;
+		
+		if(us.addUser(user)){
+			message = "success";
+		}else{
+			message = "fail";
+		}
+		
+		map.put("message", message);
+		map.put("userId", user.getUserId());
+		
+		return map;
 	}
 	
 }

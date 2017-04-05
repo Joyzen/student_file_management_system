@@ -24,4 +24,18 @@ public interface UserService extends UserDetailsService {
 	 */
 	public boolean updateUser(UserBean userBean);
 	
+	/**
+	 * 删除用户账号
+	 * @param id
+	 * @return
+	 */
+	public boolean delUser(String id);
+	
+	/**
+	 * 新增用户
+	 * @param userBean
+	 * @return
+	 */
+	public boolean addUser(UserBean userBean);
+	
 }

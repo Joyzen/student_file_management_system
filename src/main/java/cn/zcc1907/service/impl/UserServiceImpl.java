@@ -59,5 +59,28 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 
+	@Override
+	public boolean delUser(String id) {
+		
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("userId", id);
+		
+		if(ud.delUser(map)==1){
+			return true;
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean addUser(UserBean userBean) {
+
+		if(ud.insertUser(userBean)==1){
+			return true;
+		}
+		
+		return false;
+	}
+
 
 }

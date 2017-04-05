@@ -12,7 +12,7 @@
         	<div class="span9">
             	<h1 class="page-title">Edit User</h1>
 				<div class="btn-toolbar">
-    				<button id="saveButton" class="btn btn-primary"><i class="icon-save"></i>保存修改</button>
+    				<button id="saveButton" class="btn btn-primary"><i class="icon-save"></i>保存</button>
     				<a href="javascript:" id="reset" data-toggle="modal" class="btn">重置</a>
   					<div class="btn-group"></div>
 				</div>
@@ -69,7 +69,7 @@
 	    								id="disable"/>
 	  								</label>
 	  								<br/>
-	  								<p class="help-block">启用或停用账号</p>
+	  								<p class="help-block" style="color:red">启用或停用账号</p>
 						        </div>
 						        <input type="hidden" name="userId" th:value="${user.userId}" />
    							</form>
@@ -113,6 +113,30 @@
     		var oldFormData = $("#userForm").serialize();//表单原始数据
     		$("#saveButton").click(()=>{
    				var data = $("#userForm").serializeArray();
+   				if(window.location.pathname.indexOf("add")>-1){//判断当前是否进行新增操作
+   					$.post([[@{/user/add}]],data,(result)=>{
+   						if(result.message=="success"){
+   							alertSuccess("新增成功",()=>{
+	   							$.alert({
+	   								title:'',
+	   								content:'<font style="color:red;font-weight:bold">提示：</font>新增账号需要设置密码才能登陆！',
+	   								type:'blue',
+	   								animation: 'bottom',
+	   								boxWidth: '300px',
+	   							    useBootstrap: false,
+	   							    buttons:{
+	   							    	确定:()=>{
+	   							    		location.href=[[@{/user/user}]]+'?userId='+result.userId;
+	   							    	}
+	   							    }
+	   							})
+   							});
+   						}else{
+   							alertFail("添加失败");
+   						}
+   					})
+   					return 
+   				}
    				if(oldFormData==$("#userForm").serialize()){//用户没有修改数据
    					$.alert({
    						title:'',
@@ -216,40 +240,12 @@
     		};
     		$.post([[@{/user/updatePassword}]],data,(result)=>{
     			if(result=='success'){//修改成功
-    				$.alert({
-					    title: '',
-					    content: '密码修改成功',
-					 	autoClose: '确定|3000',
-					    boxWidth: '300px',
-					    type:'green',
-					 	animation: 'rotate',
-					 	typeAnimated: true,
-					    useBootstrap: false,
-					    buttons:{
-					    	确定:()=>{location.reload();}
-					    }
-					});
+    				alertSuccess("密码修改成功");
     			}else if(result=='fail'){//原密码验证失败
-    				$.alert({
-    					title:'',
-   						content:"原密码校验失败，请重新输入！",
-   						autoClose: '确定|3000',
-   						type:'red',
-   						animation: 'bottom',
-   						boxWidth: '300px',
-					    useBootstrap: false,
-    				})
+    				alertFail("原密码验证失败");
     				return false;
     			}else{//其他情况
-    				$.alert({
-    					title:'',
-   						content:"错误！",
-   						autoClose: '确定|3000',
-   						type:'red',
-   						animation: 'bottom',
-   						boxWidth: '300px',
-					    useBootstrap: false,
-    				})
+    				alertFail("其他错误");
     				return false;
     			}
     		})

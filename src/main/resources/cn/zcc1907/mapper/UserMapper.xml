@@ -31,9 +31,12 @@
 			</where>
 	</select>
 	
-	<insert id="insertUser" parameterType="UserBean">
-		insert into user values(null,#{userAccount},#{userName},#{password},
-			#{sex},#{email},#{phone},#{useFlag});
+	<insert id="insertUser" parameterType="UserBean" >
+		insert into user(userId,userAccount,userName,password,sex,email,phone,useFlag) 
+			values(null,#{userAccount},#{userName},#{password},#{sex},#{email},#{phone},#{useFlag});
+		<selectKey keyProperty="userId" resultType="String" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
 	
 	<delete id="delUser" parameterType="Map">

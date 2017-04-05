@@ -14,7 +14,7 @@
 	        <div class="span9">
 	        	<h1 class="page-title">用户信息</h1>
 				<div class="btn-toolbar">
-				    <button class="btn btn-primary"><i class="icon-plus"></i> New User</button>
+				    <button id="newButton" class="btn btn-primary"><i class="icon-plus"></i>新增用户</button>
 				    <button class="btn">Import</button>
 				    <button class="btn">Export</button>
 				  	<div class="btn-group"></div>
@@ -44,7 +44,8 @@
 				          <td th:text="${user.useFlag}">状态</td>
 				          <td>
 				              <a th:href="@{/user/user?(userId=${user.userId})}"><i class="icon-pencil"></i></a>
-				              <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+				              <a th:href="'javascript:remove(' + ${user.userId} + ')'"
+				              id="removeButton" ><i class="icon-remove"></i></a>
 				          </td>
 				        </tr>
 				      </tbody>
@@ -61,30 +62,50 @@
 				    </ul>
 				</div>
 			</div>
-			<div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    			<div class="modal-header">
-        			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        			<h3 id="myModalLabel">Delete Confirmation</h3>
-    			</div>
-			    <div class="modal-body">
-			        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
-			    </div>
-			    <div class="modal-footer">
-			        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-			        <button class="btn btn-danger" data-dismiss="modal">Delete</button>
-			    </div>
-			</div>
         </div>
     </div>
     <footer  th:include="index::footer"></footer>
     <script th:inline="javascript">
     	$(function(){
-    		$("a").each(function(){
+    		$("a").each(function(){//设置页数栏样式
        			if($(this).html()=='[[${pageNum}]]'){
        				$(this).parent().attr("class","active");
        				$(this).attr("href","javascript:");
        			}
     		})
+    		
+    	})
+   		function remove(id) {
+   			$.alert({
+				title:'',
+				content:'<font style="color:red;font-weight:bold">危险操作：</font>确认删除该账号？',
+				autoClose: '取消|9000',
+				type:'red',
+				animation: 'top',
+				boxWidth: '300px',
+		    	useBootstrap: false,
+		    	buttons:{
+		    		确认:()=>{
+		    			var data = {
+		    					[[${_csrf.parameterName}]]:[[${_csrf.token}]],
+		    					"id":id
+		    			}
+		    			$.post([[@{/user/delete}]],data,(result)=>{
+		    				if(result=='success'){
+		    					alertSuccess("删除成功");
+		    				}else if(result=="fail"){
+		    					alertFail("删除失败");
+		    				}
+		    			})
+		    		},
+		    		取消:{}
+		    	}
+			});
+			return;
+   		}
+    	
+    	$("#newButton").click(()=>{
+    		location.href=[[@{/user/toadd}]];
     	})
     </script>
   </body>
