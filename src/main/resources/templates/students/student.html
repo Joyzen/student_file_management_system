@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head th:include="index::head">
+  </head>
+
+  <body>
+    
+    <div class="navbar" th:include="index::navbar"></div>
+    
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span3" id="menuSpan" th:include="index::menu"></div>
+	        <div class="span9">
+	        	<h1 class="page-title">学生信息</h1>
+				<div class="btn-toolbar">
+				    <button id="newButton" class="btn btn-primary"><i class="icon-plus"></i>新增学生</button>
+				    <button class="btn">Import</button>
+				    <button class="btn">Export</button>
+				  	<div class="btn-group"></div>
+				</div>
+				<div class="well">
+				    <table class="table" data-toggle="table"
+				    	th:attr="data-url=@{/student/list}" 
+				    	data-pagination="true" 
+       					data-side-pagination="server" 
+       					data-page-size="5"
+       					data-page-list="[5, 10, 20]"
+       					data-search="true" >
+				      <thead>
+				        <tr>
+				          <th data-field="sno">学号</th>
+				          <th data-field="name">姓名</th>
+				          <th data-field="sex">性别</th>
+				          <th data-field="birth">出生日期</th>
+				          <th data-field="phone">电话</th>
+				          <th data-field="email">电子邮箱</th>
+				          <th data-field="idnum">身份证号码</th>
+				          <th data-field="classId">班级</th>
+				          <th data-field="nation">民族</th>
+				        </tr>
+				      </thead>
+				    </table>
+				</div>
+			</div>
+        </div>
+    </div>
+    <footer  th:include="index::footer"></footer>
+    <script th:inline="javascript">
+    	$(function(){
+    		$("a").each(function(){//设置页数栏样式
+       			if($(this).html()=='[[${pageNum}]]'){
+       				$(this).parent().attr("class","active");
+       				$(this).attr("href","javascript:");
+       			}
+    		})
+    		
+    	})
+   		function remove(id) {
+   			$.alert({
+				title:'',
+				content:'<font style="color:red;font-weight:bold">危险操作：</font>确认删除该账号？',
+				autoClose: '取消|9000',
+				type:'red',
+				animation: 'top',
+				boxWidth: '300px',
+		    	useBootstrap: false,
+		    	buttons:{
+		    		确认:()=>{
+		    			var data = {
+		    					[[${_csrf.parameterName}]]:[[${_csrf.token}]],
+		    					"id":id
+		    			}
+		    			$.post([[@{/user/delete}]],data,(result)=>{
+		    				if(result=='success'){
+		    					alertSuccess("删除成功");
+		    				}else if(result=="fail"){
+		    					alertFail("删除失败");
+		    				}
+		    			})
+		    		},
+		    		取消:{}
+		    	}
+			});
+			return;
+   		}
+    	
+    	$("#newButton").click(()=>{
+    		location.href=[[@{/user/toadd}]];
+    	})
+    </script>
+  </body>
+</html>
+
+
