@@ -35,7 +35,7 @@ public class StudentController {
 		String data = null;
 		Map<String,Object> map = new HashMap<String,Object>();
 		
-		Page<StudentBean> page = PageHelper.startPage(offset, limit);
+		Page<StudentBean> page = PageHelper.offsetPage(offset, limit);
 		ss.selectStudent(student);
 		map.put("rows", page.getResult());
 		map.put("total", page.getTotal());
