@@ -4,9 +4,7 @@
   </head>
 
   <body>
-    
     <div class="navbar" th:include="index::navbar"></div>
-    
 
     <div class="container-fluid">
         <div class="row-fluid">
@@ -22,22 +20,22 @@
 				<div class="well">
 				    <table class="table" data-toggle="table"
 				    	th:attr="data-url=@{/student/list}" 
+				    	data-show-export="true" 
 				    	data-pagination="true" 
        					data-side-pagination="server" 
        					data-page-size="5"
-       					data-page-list="[5, 10, 20]"
-       					data-search="true" >
+       					data-page-list="[5, 10, 20]">
 				      <thead>
 				        <tr>
-				          <th data-field="sno">学号</th>
-				          <th data-field="name">姓名</th>
-				          <th data-field="sex">性别</th>
-				          <th data-field="birth">出生日期</th>
-				          <th data-field="phone">电话</th>
-				          <th data-field="email">电子邮箱</th>
-				          <th data-field="idnum">身份证号码</th>
-				          <th data-field="classId">班级</th>
-				          <th data-field="nation">民族</th>
+				          <th data-field="sno" data-align="center">学号</th>
+				          <th data-field="name" data-align="center">姓名</th>
+				          <th data-field="sex" data-align="center">性别</th>
+				          <th data-field="birth" data-align="center">出生日期</th>
+				          <th data-field="phone" data-align="center">电话</th>
+				          <th data-field="email" data-align="center">电子邮箱</th>
+				          <th data-field="idnum" data-align="center">身份证号码</th>
+				          <th data-field="classId" data-align="center">班级</th>
+				          <th data-field="nation" data-align="center">民族</th>
 				        </tr>
 				      </thead>
 				    </table>
@@ -47,48 +45,11 @@
     </div>
     <footer  th:include="index::footer"></footer>
     <script th:inline="javascript">
-    	$(function(){
-    		$("a").each(function(){//设置页数栏样式
-       			if($(this).html()=='[[${pageNum}]]'){
-       				$(this).parent().attr("class","active");
-       				$(this).attr("href","javascript:");
-       			}
-    		})
-    		
-    	})
-   		function remove(id) {
-   			$.alert({
-				title:'',
-				content:'<font style="color:red;font-weight:bold">危险操作：</font>确认删除该账号？',
-				autoClose: '取消|9000',
-				type:'red',
-				animation: 'top',
-				boxWidth: '300px',
-		    	useBootstrap: false,
-		    	buttons:{
-		    		确认:()=>{
-		    			var data = {
-		    					[[${_csrf.parameterName}]]:[[${_csrf.token}]],
-		    					"id":id
-		    			}
-		    			$.post([[@{/user/delete}]],data,(result)=>{
-		    				if(result=='success'){
-		    					alertSuccess("删除成功");
-		    				}else if(result=="fail"){
-		    					alertFail("删除失败");
-		    				}
-		    			})
-		    		},
-		    		取消:{}
-		    	}
-			});
-			return;
-   		}
-    	
-    	$("#newButton").click(()=>{
-    		location.href=[[@{/user/toadd}]];
-    	})
     </script>
+    <!-- bootstrap导出数据引用js -->
+    <script  th:src="@{/lib/bootstrap-table/extensions/bootstrap-table-export.min.js}" type="text/javascript"></script>
+    <script  th:src="@{/lib/bootstrap-table/extensions/tableExport.js}" type="text/javascript"></script>
+    
   </body>
 </html>
 

@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
@@ -31,7 +32,9 @@ public class StudentController {
 	
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	@ResponseBody
-	public String getList(StudentBean student,int limit,int offset){
+	public String getList(StudentBean student,
+			@RequestParam(defaultValue="0",required=false)int limit,
+			@RequestParam(defaultValue="0",required=false)int offset){
 		String data = null;
 		Map<String,Object> map = new HashMap<String,Object>();
 		
@@ -39,7 +42,6 @@ public class StudentController {
 		ss.selectStudent(student);
 		map.put("rows", page.getResult());
 		map.put("total", page.getTotal());
-		//map.put("page", page.getPages());
 		
 		data = JSON.toJSONString(map);
 		

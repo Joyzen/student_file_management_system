@@ -41,11 +41,11 @@
 				          <td th:text="${user.sex}">性别</td>
 				          <td th:text="${user.email}">邮箱</td>
 				          <td th:text="${user.phone}">电话</td>
-				          <td th:text="${user.useFlag}">状态</td>
-				          <td>
-				              <a th:href="@{/user/user?(userId=${user.userId})}"><i class="icon-pencil"></i></a>
+				          <td th:text="${user.useFlag}==1?'启用':'停用'">状态</td>
+				          <td width="50px">
+				              <a th:href="@{/user/user?(userId=${user.userId})}">  <i class="icon-pencil"></i></a>
 				              <a th:href="'javascript:remove(' + ${user.userId} + ')'"
-				              id="removeButton" ><i class="icon-remove"></i></a>
+				              id="removeButton" >  <i class="icon-remove"></i></a>
 				          </td>
 				        </tr>
 				      </tbody>
