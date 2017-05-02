@@ -1,6 +1,7 @@
 package cn.zcc1907.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
@@ -40,10 +42,12 @@ public class StudentController {
 		
 		Page<StudentBean> page = PageHelper.offsetPage(offset, limit);
 		ss.selectStudent(student);
+		
 		map.put("rows", page.getResult());
 		map.put("total", page.getTotal());
 		
-		data = JSON.toJSONString(map);
+		JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";
+		data = JSON.toJSONString(map,SerializerFeature.WriteDateUseDateFormat);
 		
 		return data;
 	}

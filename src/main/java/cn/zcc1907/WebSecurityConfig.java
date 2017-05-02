@@ -35,8 +35,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 		,"/logout"
                 		).permitAll()//配置不需要进行权限管理的目录
                 .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").failureUrl("/login?error")
-                .defaultSuccessUrl("/index").permitAll()
+                .and().formLogin().loginPage("/login")
+                .defaultSuccessUrl("/index")
+                .failureUrl("/login?error").permitAll()
                 .and().logout().logoutUrl("/index").permitAll();
     }
 	
