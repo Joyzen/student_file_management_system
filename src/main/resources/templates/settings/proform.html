@@ -1,0 +1,18 @@
+<form id="proForm" method="post" class="form-horizontal">
+    <div class="control-group">
+	    <label class="control-label">专业名称：</label>
+	    <div class="controls">
+	    	<input type="text" name="name" class="input-medium"/>
+	    </div>
+    </div>
+	
+	<div class="control-group">
+	    <label class="control-label">专业描述：</label>
+	    <div class="controls">
+	    	<textarea name="remark" rows="2"></textarea>
+	    </div>
+    </div>
+	    
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <input type="hidden" name="id" value="-1"/>
+</form>

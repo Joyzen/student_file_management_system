@@ -8,12 +8,22 @@
   	function optionFormatter(value,row,index){
   		var rowdata = JSON.stringify(row).replace(/"/g, "'");
   		var modiBtn = '<button class="btn btn-info" onclick="modiUser('+rowdata+')">修改</button>';
-  		var delBtn = '<button class="btn btn-warning" onclick="delUser('+row.sno+')">删除</button>';
+  		var delBtn = '<button class="btn btn-warning" onclick="delUser('+row.id+')">删除</button>';
   		return modiBtn+'&nbsp;'+delBtn;
   	}
   	
-  	function sexFormatter(value,row,index){
-  		return value==0?'男':'女';
+  	function gradeFormatter(value,row,index){
+  		if(value==1){
+  			return '大一';
+  		}else if(value==2){
+  			return '大二';
+  		}else if(value==3){
+  			return '大三';
+  		}else if(value==4){
+  			return '大四';
+  		}else{
+  			return '待定';
+  		}
   	}
   	
   	function modiUser(row){
@@ -23,29 +33,22 @@
   			type:'blue',
 			animation: 'top',
 			onContentReady:()=>{
-				$('input[name="sno"]').val(row.sno);
+				$('input[name="id"]').val(row.id);
 				$('input[name="name"]').val(row.name);
-				var radio = row.sex==0?$('input[name="sex"][value="0"]'):$('input[name="sex"][value="1"]');
-				radio.attr('checked','checked');
-				$('input[name="birth"]').val(row.birth);
-				$('input[name="phone"]').val(row.phone);
-				$('input[name="email"]').val(row.email);
-				$('input[name="idnum"]').val(row.idnum);
-				$('input[name="classId"]').val(row.classId);
-				$('input[name="nation"]').val(row.nation);
-				$.getJSON([[@{/class/list}]],{[[${_csrf.parameterName}]]:[[${_csrf.token}]],},(result)=>{
-					result.rows.forEach((cla)=>{
-						$('select[name="classId"]').append('<option value="'+cla.id+'">'+cla.name+'</option>');
+				$('select[name="grade"]').val(row.grade);
+				$.getJSON([[@{/prof/list}]],{[[${_csrf.parameterName}]]:[[${_csrf.token}]],},(result)=>{
+					result.rows.forEach((pro)=>{
+						$('select[name="proId"]').append('<option value="'+pro.id+'">'+pro.name+'</option>');
 					})
-					$('select[name="classId"]').val(row.classId);
+					$('select[name="proId"]').val(row.proId);
 				});
 			},
 			buttons:{
 				提交:{
 					btnClass:'btn btn-danger',
 					action:()=>{
-						var data = $('#stuForm').serializeArray();
-						$.post([[@{/student/update}]],data,(result)=>{
+						var data = $('#classForm').serializeArray();
+						$.post([[@{/class/update}]],data,(result)=>{
 							if(result=='success'){
 								alertSuccess('修改成功！');
 								$('#tablelist').bootstrapTable('refresh');
@@ -64,7 +67,7 @@
   		})
   	}
   	
-  	function delUser(sno){
+  	function delUser(id){
   		$.alert({
 			title:'',
 			content:'<font style="color:red;font-weight:bold">危险操作：</font>确认删除该学生档案？',
@@ -77,9 +80,9 @@
 	    		确认:()=>{
 	    			var data = {
 	    					[[${_csrf.parameterName}]]:[[${_csrf.token}]],
-	    					"sno":sno
+	    					"id":id
 	    			}
-	    			$.post([[@{/student/del}]],data,(result)=>{
+	    			$.post([[@{/class/del}]],data,(result)=>{
 	    				if(result=='success'){
 	    					alertSuccess("删除成功");
 	    					$('#tablelist').bootstrapTable('refresh');
@@ -101,9 +104,9 @@
 	  			type:'blue',
 				animation: 'top',
 				onContentReady:()=>{
-					$.getJSON([[@{/class/list}]],{[[${_csrf.parameterName}]]:[[${_csrf.token}]],},(result)=>{
-						result.rows.forEach((cla)=>{
-							$('select[name="classId"]').append('<option value="'+cla.id+'">'+cla.name+'</option>');
+					$.getJSON([[@{/prof/list}]],{[[${_csrf.parameterName}]]:[[${_csrf.token}]],},(result)=>{
+						result.rows.forEach((pro)=>{
+							$('select[name="proId"]').append('<option value="'+pro.id+'">'+pro.name+'</option>');
 						})
 					});
 				},
@@ -111,7 +114,7 @@
 					提交:{
 						btnClass:'btn btn-danger',
 						action:()=>{
-							$.post([[@{/student/add}]],$('#stuForm').serializeArray(),(result)=>{
+							$.post([[@{/class/add}]],$('#classForm').serializeArray(),(result)=>{
 								if(result=='success'){
 									alertSuccess('新增成功！');
 									$('#tablelist').bootstrapTable('refresh');
@@ -137,16 +140,14 @@
         <div class="row-fluid">
             <div class="span3" id="menuSpan" th:include="index::menu"></div>
 	        <div class="span9">
-	        	<h1 class="page-title">学生信息</h1>
+	        	<h1 class="page-title">班级设置</h1>
 				<div class="btn-toolbar">
-				    <button id="newButton" class="btn btn-primary"><i class="icon-plus"></i>新增学生</button>
-				    <button class="btn">Import</button>
-				    <button class="btn">Export</button>
+				    <button id="newButton" class="btn btn-primary"><i class="icon-plus"></i>新增班级</button>
 				  	<div class="btn-group"></div>
 				</div>
 				<div class="well">
 				    <table id="tablelist" class="table" data-toggle="table"
-				    	th:attr="data-url=@{/student/list}" 
+				    	th:attr="data-url=@{/class/list}" 
 				    	data-show-export="true" 
 				    	data-pagination="true" 
        					data-side-pagination="server" 
@@ -156,15 +157,10 @@
        					data-page-list="[5, 10, 20]">
 				      <thead>
 				        <tr>
-				          <th data-field="sno" data-align="center">学号</th>
-				          <th data-field="name" data-align="center">姓名</th>
-				          <th data-field="sex" data-formatter="sexFormatter" data-align="center">性别</th>
-				          <th data-field="birth" data-align="center">出生日期</th>
-				          <th data-field="phone" data-align="center">电话</th>
-				          <th data-field="email" data-align="center">电子邮箱</th>
-				          <th data-field="idnum" data-align="center">身份证号码</th>
-				          <th data-field="className" data-align="center">班级</th>
-				          <th data-field="nation" data-align="center">民族</th>
+				          <th data-field="id" data-align="center">班级编号</th>
+				          <th data-field="name" data-align="center">班级名称</th>
+				          <th data-field="grade" data-formatter="gradeFormatter" data-align="center">年级</th>
+				          <th data-field="proName" data-align="center">专业</th>
 				          <th data-field="" data-formatter="optionFormatter" data-align="center">操作</th>
 				        </tr>
 				      </thead>

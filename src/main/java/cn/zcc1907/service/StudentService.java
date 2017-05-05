@@ -9,5 +9,11 @@ public interface StudentService {
 
 	public List<StudentBean> selectStudent(StudentBean student);
 	
+	public boolean update(StudentBean student);
+	
+	public boolean insert(StudentBean student);
+	
+	public boolean delete(int	sno);
+	
 	
 }

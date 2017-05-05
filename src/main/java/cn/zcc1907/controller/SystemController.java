@@ -14,7 +14,7 @@ public class SystemController {
 	 */
 	@RequestMapping("/")
 	public String toLogin(){
-		return "sign-in";
+		return "index";
 	}
 	
 	/**

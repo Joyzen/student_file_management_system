@@ -13,36 +13,43 @@
 		 <result property="classId" column="classId" />
 		 <result property="nation" column="nation" />
 		 <result property="pic" column="pic" />
+		 <result property="className" column="className" />
 	</resultMap>
 	
 	<!-- 根据条件搜索管用户数据 -->
 	<select id="selectStudentByCondition" parameterType="Map"
 		resultMap="StudentResultMap">
-		select * from student
+		select s.sno as sno,s.name as name,s.sex as sex,s.birth as birth,
+			s.phone as phone,s.email as email,s.idnum as idnum,s.classId as classId,
+			s.nation as nation,s.pic as pic,c.name as className
+		 from student s left join class c on s.classId=c.id 
 			<where>
 				<if test="sno!=null and sno!=''">
-					and sno=#{sno}  
+					and s.sno=#{sno}  
+				</if>
+				<if test="name!=null and name!=''">
+					and s.name like '%${name}%'  
 				</if>
 				<if test="sex!=null and sex!=''">
-					and sex=#{sex}  
+					and s.sex=#{sex}  
 				</if>
 				<if test="birth!=null and birth!=''">
-					and birth=#{birth} 
+					and s.birth=#{birth} 
 				</if>
 				<if test="classId!=null and classId!=''">
-					and classId=#{classId} 
+					and s.classId=#{classId} 
 				</if>
 				<if test="nation!=null and nation!=''">
-					and nation=#{nation} 
+					and s.nation=#{nation} 
 				</if>
 				<if test="idnum!=null and idnum!=''">
-					and idnum=#{idnum} 
+					and s.idnum=#{idnum} 
 				</if>
 				<if test="phone!=null and phone!=''">
-					and phone=#{phone} 
+					and s.phone=#{phone} 
 				</if>
 				<if test="email!=null and email!=''">
-					and email=#{email} 
+					and s.email=#{email} 
 				</if>
 			</where>
 	</select>

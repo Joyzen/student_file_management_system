@@ -13,6 +13,8 @@
     <link rel="stylesheet" th:href="@{/lib/font-awesome/css/font-awesome.css}"></link>
     <link rel="stylesheet" th:href="@{/lib/jquery-confirm/jquery-confirm.min.css}"></link>
     <link rel="stylesheet" th:href="@{/lib/bootstrap-table/bootstrap-table.min.css}"></link>
+    <link rel="stylesheet" th:href="@{/lib/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css}"></link>
+    <link rel="stylesheet" th:href="@{/lib/select/bootstrap-select.min.css}"></link>
 	
     <script  th:src="@{/lib/jquery-1.9.1.js}" type="text/javascript"></script>
     <script  th:src="@{/javascripts/vue.js}" type="text/javascript"></script>
@@ -21,6 +23,10 @@
     <script  th:src="@{/javascripts/common.js}" type="text/javascript"></script>
     <script  th:src="@{/lib/bootstrap-table/bootstrap-table.min.js}" type="text/javascript"></script>
     <script  th:src="@{/lib/bootstrap-table/bootstrap-table-zh-CN.min.js}" type="text/javascript"></script>
+    <script  th:src="@{/lib/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js}" type="text/javascript"></script>
+    <script  th:src="@{/lib/bootstrap-datetimepicker/bootstrap-datetimepicker.zh-CN.js}" type="text/javascript"></script>
+    <script  th:src="@{/lib/select/bootstrap-select.min.js}" type="text/javascript"></script>
+    <script  th:src="@{/lib/select/defaults-zh_CN.min.js}" type="text/javascript"></script>
     
     <script th:inline="javascript">
     $(function () {	
@@ -76,22 +82,17 @@
     <div class="navbar" th:fragment="navbar">
         <div class="navbar-inner">
             <div class="container-fluid">
-                <ul class="nav pull-right">
+                <div class="nav pull-right">
                     
-                    <li id="fat-menu" class="dropdown">
-                        <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="#" id="fat-menu">
                             <i class="icon-user"></i> 管理员
-                            <i class="icon-caret-down"></i>
                         </a>
+                        
+                        <a class="btn" th:href="@{/login}">退出</a>
 
-                        <ul class="dropdown-menu">
-                            <li><a tabindex="-1" href="#">设置</a></li>
-                            <li class="divider"></li>
-                            <li><a tabindex="-1" th:href="@{/login}">退出</a></li>
-                        </ul>
-                    </li>
+                        
                     
-                </ul>
+                </div>
                 <a class="brand" href="index.html"><span class="first"></span> <span class="second">学生档案管理系统</span></a>
             </div>
         </div>
@@ -268,6 +269,7 @@
 	    </hr>
 	<script th:src="@{/lib/bootstrap/js/bootstrap.js}"></script>
 	<script  th:src="@{/javascripts/canvas-nest.min.js}" type="text/javascript"></script>
+	
 	</footer>
 	
 	<!-- Placed at the end of the document so the pages load faster -->

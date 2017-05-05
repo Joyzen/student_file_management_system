@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zcc1907.dao.EdurcdDao">
+	<resultMap type="EdurcdBean" id="EdurcdMap">
+		 <id property="id" column="id" />
+		 <result property="fro" column="fro" />
+		 <result property="too" column="too" />
+		 <result property="witness" column="witness" />
+		 <result property="position" column="position" />
+		 <result property="school" column="school" />
+		 <result property="sno" column="sno" />
+		 <result property="sname" column="sname" />
+	</resultMap>
+	
+	<select id="select" parameterType="EdurcdBean"
+		resultMap="EdurcdMap">
+		select e.id as id,e.fro as fro,e.too as too,e.witness as witness,e.position as position,
+		e.school as school,e.sno as sno,s.name as sname
+		from edurcd e left join student s on e.sno=s.sno
+			<where>
+				<if test="id!=null and id!=''">
+					and id=#{id}  
+				</if>
+				<if test="witness!=null and witness!=''">
+					and witness like '%${witness}%'  
+				</if>
+				<if test="position!=null and position!=''">
+					and position like '%${position}%'
+				</if>
+				<if test="school!=null and school!=''">
+					and school like '%${school}%'
+				</if>
+				<if test="sno!=null and sno!=''">
+					and sno like '%${sno}%'
+				</if>
+				<if test="sname!=null and sname!=''">
+					and s.name like '%${sname}%'
+				</if>
+			</where>
+	</select>
+	
+	<insert id="insert" parameterType="EdurcdBean" >
+		insert into edurcd(id,fro,too,witness,position,school,sno) 
+			values(null,#{fro},#{too},#{witness},#{position},#{school},#{sno});
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from edurcd where id=#{id};
+	</delete>
+	
+	<update id="update" parameterType="EdurcdBean">
+		update edurcd  
+			<set>
+				<if test="fro != null">fro=#{fro},</if>
+				<if test="too != null">too=#{too},</if>
+				<if test="witness != null">witness=#{witness},</if>
+				<if test="position != null">position=#{position},</if>
+				<if test="school != null">school=#{school},</if>
+				<if test="sno != null">sno=#{sno},</if>
+			</set>
+				where id=#{id};
+	</update>
+</mapper>

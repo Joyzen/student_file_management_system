@@ -1,7 +1,6 @@
 package cn.zcc1907.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -17,33 +16,34 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
+import cn.zcc1907.bean.ProfessionBean;
 import cn.zcc1907.bean.StudentBean;
-import cn.zcc1907.service.StudentService;
+import cn.zcc1907.dao.ProfessionDao;
 
 @Controller
-@RequestMapping("/student")
-public class StudentController {
+@RequestMapping("/prof")
+public class ProfessionController {
 
 	@Resource
-	StudentService ss;
+	ProfessionDao pd;
 	
-	@RequestMapping(value="/students",method=RequestMethod.GET)
-	public String listStudent(){
-		return "students/student";
+	@RequestMapping(value="/page",method=RequestMethod.GET)
+	public String toPage(){
+		return "settings/profession";
 	}
 	
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	@ResponseBody
-	public String getList(StudentBean student,
+	public String getList(ProfessionBean professionBean,
 			@RequestParam(defaultValue="",required=false)String search,
 			@RequestParam(defaultValue="0",required=false)int limit,
 			@RequestParam(defaultValue="0",required=false)int offset){
 		String data = null;
-		student.setName(search);
+		professionBean.setName(search);
 		Map<String,Object> map = new HashMap<String,Object>();
 		
 		Page<StudentBean> page = PageHelper.offsetPage(offset, limit);
-		ss.selectStudent(student);
+		pd.select(professionBean);
 		
 		map.put("rows", page.getResult());
 		map.put("total", page.getTotal());
@@ -56,25 +56,25 @@ public class StudentController {
 	
 	@RequestMapping(value="/form",method=RequestMethod.GET)
 	public String form(){
-		return "students/form";
+		return "settings/proform";
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST)
 	@ResponseBody
-	public String update(StudentBean student){
-		return ss.update(student)?"success":"fail";
+	public String update(ProfessionBean professionBean){
+		return pd.update(professionBean)==1?"success":"fail";
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	@ResponseBody
-	public String add(StudentBean student){
-		return ss.insert(student)?"success":"fail";
+	public String add(ProfessionBean professionBean){
+		return pd.insert(professionBean)==1?"success":"fail";
 	}
 	
 	@RequestMapping(value="/del",method=RequestMethod.POST)
 	@ResponseBody
-	public String del(int sno){
-		return ss.delete(sno)?"success":"fail";
+	public String del(int id){
+		return pd.delete(id)==1?"success":"fail";
 	}
 	
 }

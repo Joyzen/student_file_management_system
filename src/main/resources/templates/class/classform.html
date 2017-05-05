@@ -1,0 +1,31 @@
+<form id="classForm" method="post" class="form-horizontal">
+    <div class="control-group">
+	    <label class="control-label">班级名称：</label>
+	    <div class="controls">
+	    	<input type="text" name="name" class="input-medium"/>
+	    </div>
+    </div>
+    
+    <div class="control-group">
+	    <label class="control-label">年级：</label>
+	    <div class="controls">
+	    	<select name="grade" class="input-medium">
+			  <option value="1">大一</option>
+			  <option value="2">大二</option>
+			  <option value="3">大三</option>
+			  <option value="4">大四</option>
+			</select>
+	    </div>
+    </div>
+    
+    <div class="control-group">
+	    <label class="control-label">专业：</label>
+	    <div class="controls">
+	    	<select name="proId" class="input-medium">
+			</select>
+	    </div>
+    </div>
+	
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <input type="hidden" name="id" value="-1"/>
+</form>

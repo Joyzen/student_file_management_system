@@ -1,12 +1,81 @@
-<div>
-<form id="opasswordForm">
-    <div class="form-group">
-        <label class="control-label">原密码</label>
-        <input autofocus="autofocus" type="password" id="input-name" name="opassword"
-        	placeholder="请输入用户原密码" class="form-control"/>
-        <p class="text-danger help-block" style="display:none"></p>
+<form id="stuForm" method="post" class="form-horizontal">
+    <div class="control-group">
+	    <label class="control-label">姓名：</label>
+	    <div class="controls">
+	    	<input type="text" name="name" class="input-medium"/>
+	    </div>
     </div>
-    <p class="text">
-    </p>
+       
+    <div class="control-group">
+	    <label class="control-label">性别：</label>
+	    <div class="controls">
+		   	<label class="radio inline">
+		  		<input type="radio" name="sex" value="0"/> 男
+			</label>
+			<label class="radio inline">
+		  		<input type="radio" name="sex" value="1"/> 女
+			</label>
+		</div>
+	</div>
+	
+	<div class="control-group">
+	    <label class="control-label">出生日期：</label>
+	    <div class="controls input-append date"  id="datetimepicker" 
+	    data-date="12-02-2012"  data-link-format="yyyy-mm-dd" 
+	    data-date-format="yyyy-mm-dd" style="display:block">
+	    	<input type="text" name="birth" class="input-small"/>
+	    	<span class="add-on"><i class="icon-remove"></i></span>
+			<span class="add-on"><i class="icon-th"></i></span>
+	    </div>
+	</div>        
+	
+	<div class="control-group">
+	    <label class="control-label">电话：</label>
+	    <div class="controls">
+	    	<input type="text" name="phone" class="input-medium"/>
+	    </div>
+    </div>
+    
+    <div class="control-group">
+	    <label class="control-label">电子邮箱：</label>
+	    <div class="controls">
+	    	<input type="text" name="email" class="input-medium"/>
+	    </div>
+    </div>
+    
+    <div class="control-group">
+    	<label class="control-label">身份证号码：</label>
+    	<div class="controls">
+    		<input type="text" name="idnum" class="input-medium"/>
+		</div>
+	</div>
+    
+    <div class="control-group">
+	    <label class="control-label">班级：</label>
+	    <div class="controls">
+	    	<select name="classId" class="input-medium">
+			</select>
+		</div>
+	</div>
+    
+    <div class="control-group">
+	    <label class="control-label">民族：</label>
+	    <div class="controls">
+	    	<input type="text" name="nation" class="input-medium"/>
+		</div>
+	</div>
+	    
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <input type="hidden" name="sno" value="-1"/>
 </form>
-</div>
+<script th:inline="javascript">
+	$('#datetimepicker').datetimepicker({
+		language:  'zh-CN',
+	    todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+	});
+</script>

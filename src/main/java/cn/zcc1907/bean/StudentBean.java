@@ -53,6 +53,17 @@ public class StudentBean {
 	 * 照片
 	 */
 	private String pic;
+	
+	private String className;
+	
+
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
 
 	public int getSno() {
 		return sno;

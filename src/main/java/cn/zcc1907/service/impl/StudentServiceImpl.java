@@ -22,4 +22,19 @@ public class StudentServiceImpl implements StudentService {
 		return sd.selectStudentByCondition(student);
 	}
 
+	@Override
+	public boolean update(StudentBean student) {
+		return sd.updateStudentById(student)==1?true:false;
+	}
+
+	@Override
+	public boolean insert(StudentBean student) {
+		return sd.insertStudent(student)==1?true:false;
+	}
+
+	@Override
+	public boolean delete(int sno) {
+		return sd.delStudentById(sno)==1?true:false;
+	}
+
 }

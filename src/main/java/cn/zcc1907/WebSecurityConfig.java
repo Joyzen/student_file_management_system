@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/resources/**", "/stylesheets/**",
-                		"/images/**","javascripts/**","/lib/**","/login"
+                		"/images/**","/javascripts/**","/lib/**","/login"
                 		,"/logout"
                 		).permitAll()//配置不需要进行权限管理的目录
                 .anyRequest().authenticated()

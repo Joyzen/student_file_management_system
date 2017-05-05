@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zcc1907.dao.RwdpunishDao">
+	<resultMap type="RwdpunishBean" id="RwdpunishMap">
+		 <id property="id" column="id" />
+		 <result property="date" column="date" />
+		 <result property="record" column="record" />
+		 <result property="flag" column="flag" />
+		 <result property="place" column="place" />
+		 <result property="sno" column="sno" />
+		 <result property="sname" column="sname" />
+	</resultMap>
+	
+	<!-- 根据条件搜索管用户数据 -->
+	<select id="list" parameterType="RwdpunishBean"
+		resultMap="RwdpunishMap">
+		select r.id as id,r.date as date,r.record as record,r.flag as flag,
+		r.place as place,r.sno as sno,s.name as sname
+		from rwdpunish r left join student s on r.sno=s.sno 
+			<where>
+				<if test="id!=null and id!=''">
+					and r.id=#{id}  
+				</if>
+				<if test="sno!=null and sno!=''">
+					and r.sno=#{sno}  
+				</if>
+				<if test="place!=null and place!=''">
+					and r.place like '%${place}%'
+				</if>
+				<if test="sname!=null and sname!=''">
+					and s.name like '%${sname}%'
+				</if>
+			</where>
+	</select>
+	
+	<insert id="insert" parameterType="RwdpunishBean" >
+		insert into rwdpunish(id,date,record,flag,place,sno) 
+			values(null,#{date},#{record},#{flag},#{place},#{sno});
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<delete id="del" parameterType="int">
+		delete from rwdpunish where id=#{id};
+	</delete>
+	
+	<update id="update" parameterType="RwdpunishBean">
+		update rwdpunish  
+			<set>
+				<if test="date != null">date=#{date},</if>
+				<if test="record != null">record=#{record},</if>
+				<if test="flag != null">flag=#{flag},</if>
+				<if test="place != null">place=#{place},</if>
+				<if test="sno != null">sno=#{sno},</if>
+			</set>
+				where id=#{id};
+	</update>
+</mapper>

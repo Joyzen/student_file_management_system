@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zcc1907.dao.ClassDao">
+	<resultMap type="ClassBean" id="ClassMap">
+		 <id property="id" column="id" />
+		 <result property="name" column="name" />
+		 <result property="grade" column="grade" />
+		 <result property="proId" column="proId" />
+		 <result property="proName" column="proName" />
+	</resultMap>
+	
+	<select id="select" parameterType="ClassBean"
+		resultMap="ClassMap">
+		SELECT c.id as id,c.name as name,c.grade as grade,c.proId,p.name as proName
+		from class c LEFT JOIN profession p on c.proId=p.id 
+			<where>
+				<if test="id!=null and id!=''">
+					and c.id=#{id}  
+				</if>
+				<if test="name!=null and name!=''">
+					and c.name like '%${name}%' 
+				</if>
+				<if test="grade!=null and grade!=''">
+					and c.grade=#{grade} 
+				</if>
+				<if test="proId!=null and proId!=''">
+					and c.proId=#{proId} 
+				</if>
+			</where>
+	</select>
+	
+	<insert id="insert" parameterType="ClassBean" >
+		insert into class(id,name,grade,proId) 
+			values(null,#{name},#{grade},#{proId});
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from class where id=#{id};
+	</delete>
+	
+	<update id="update" parameterType="ClassBean">
+		update class  
+			<set>
+				<if test="name != null">name=#{name},</if>
+				<if test="grade != null">grade=#{grade},</if>
+				<if test="proId != null">proId=#{proId},</if>
+			</set>
+				where id=#{id};
+	</update>
+</mapper>

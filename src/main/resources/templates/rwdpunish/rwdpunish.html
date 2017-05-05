@@ -8,12 +8,20 @@
   	function optionFormatter(value,row,index){
   		var rowdata = JSON.stringify(row).replace(/"/g, "'");
   		var modiBtn = '<button class="btn btn-info" onclick="modiUser('+rowdata+')">修改</button>';
-  		var delBtn = '<button class="btn btn-warning" onclick="delUser('+row.sno+')">删除</button>';
+  		var delBtn = '<button class="btn btn-warning" onclick="delUser('+row.id+')">删除</button>';
   		return modiBtn+'&nbsp;'+delBtn;
   	}
   	
-  	function sexFormatter(value,row,index){
-  		return value==0?'男':'女';
+  	function setSno(sno){
+  		$('input[name="sno"]').val(sno)
+  	}
+  	
+  	function flagFormatter(value,row,index){
+  		if(value==0){
+  			return '奖励';
+  		}else{
+  			return '惩罚';
+  		}
   	}
   	
   	function modiUser(row){
@@ -23,29 +31,20 @@
   			type:'blue',
 			animation: 'top',
 			onContentReady:()=>{
+				$('input[name="id"]').val(row.id);
 				$('input[name="sno"]').val(row.sno);
-				$('input[name="name"]').val(row.name);
-				var radio = row.sex==0?$('input[name="sex"][value="0"]'):$('input[name="sex"][value="1"]');
+				$('input[name="date"]').val(row.date);
+				$('textarea[name="record"]').val(row.record);
+				var radio = row.flag==0?$('input[name="flag"][value="0"]'):$('input[name="flag"][value="1"]');
 				radio.attr('checked','checked');
-				$('input[name="birth"]').val(row.birth);
-				$('input[name="phone"]').val(row.phone);
-				$('input[name="email"]').val(row.email);
-				$('input[name="idnum"]').val(row.idnum);
-				$('input[name="classId"]').val(row.classId);
-				$('input[name="nation"]').val(row.nation);
-				$.getJSON([[@{/class/list}]],{[[${_csrf.parameterName}]]:[[${_csrf.token}]],},(result)=>{
-					result.rows.forEach((cla)=>{
-						$('select[name="classId"]').append('<option value="'+cla.id+'">'+cla.name+'</option>');
-					})
-					$('select[name="classId"]').val(row.classId);
-				});
+				$('input[name="place"]').val(row.place);
 			},
 			buttons:{
 				提交:{
 					btnClass:'btn btn-danger',
 					action:()=>{
-						var data = $('#stuForm').serializeArray();
-						$.post([[@{/student/update}]],data,(result)=>{
+						var data = $('#rwdpunishForm').serializeArray();
+						$.post([[@{/rwdpunish/update}]],data,(result)=>{
 							if(result=='success'){
 								alertSuccess('修改成功！');
 								$('#tablelist').bootstrapTable('refresh');
@@ -64,7 +63,7 @@
   		})
   	}
   	
-  	function delUser(sno){
+  	function delUser(id){
   		$.alert({
 			title:'',
 			content:'<font style="color:red;font-weight:bold">危险操作：</font>确认删除该学生档案？',
@@ -77,9 +76,9 @@
 	    		确认:()=>{
 	    			var data = {
 	    					[[${_csrf.parameterName}]]:[[${_csrf.token}]],
-	    					"sno":sno
+	    					"id":id
 	    			}
-	    			$.post([[@{/student/del}]],data,(result)=>{
+	    			$.post([[@{/rwdpunish/del}]],data,(result)=>{
 	    				if(result=='success'){
 	    					alertSuccess("删除成功");
 	    					$('#tablelist').bootstrapTable('refresh');
@@ -101,17 +100,19 @@
 	  			type:'blue',
 				animation: 'top',
 				onContentReady:()=>{
-					$.getJSON([[@{/class/list}]],{[[${_csrf.parameterName}]]:[[${_csrf.token}]],},(result)=>{
-						result.rows.forEach((cla)=>{
-							$('select[name="classId"]').append('<option value="'+cla.id+'">'+cla.name+'</option>');
+					$.getJSON([[@{/student/list}]],{[[${_csrf.parameterName}]]:[[${_csrf.token}]],},(result)=>{
+						result.rows.forEach((stu)=>{
+							$('select[name="sname"]').append('<option value="'+stu.sno+'">'+stu.name+'</option>');
 						})
+						$('#stuselect').css('display','block')
+						$('.selectpicker').selectpicker('show')
 					});
 				},
 				buttons:{
 					提交:{
 						btnClass:'btn btn-danger',
 						action:()=>{
-							$.post([[@{/student/add}]],$('#stuForm').serializeArray(),(result)=>{
+							$.post([[@{/rwdpunish/add}]],$('#rwdpunishForm').serializeArray(),(result)=>{
 								if(result=='success'){
 									alertSuccess('新增成功！');
 									$('#tablelist').bootstrapTable('refresh');
@@ -137,16 +138,14 @@
         <div class="row-fluid">
             <div class="span3" id="menuSpan" th:include="index::menu"></div>
 	        <div class="span9">
-	        	<h1 class="page-title">学生信息</h1>
+	        	<h1 class="page-title">奖惩记录信息</h1>
 				<div class="btn-toolbar">
-				    <button id="newButton" class="btn btn-primary"><i class="icon-plus"></i>新增学生</button>
-				    <button class="btn">Import</button>
-				    <button class="btn">Export</button>
+				    <button id="newButton" class="btn btn-primary"><i class="icon-plus"></i>新增记录</button>
 				  	<div class="btn-group"></div>
 				</div>
 				<div class="well">
 				    <table id="tablelist" class="table" data-toggle="table"
-				    	th:attr="data-url=@{/student/list}" 
+				    	th:attr="data-url=@{/rwdpunish/list}" 
 				    	data-show-export="true" 
 				    	data-pagination="true" 
        					data-side-pagination="server" 
@@ -156,15 +155,12 @@
        					data-page-list="[5, 10, 20]">
 				      <thead>
 				        <tr>
-				          <th data-field="sno" data-align="center">学号</th>
-				          <th data-field="name" data-align="center">姓名</th>
-				          <th data-field="sex" data-formatter="sexFormatter" data-align="center">性别</th>
-				          <th data-field="birth" data-align="center">出生日期</th>
-				          <th data-field="phone" data-align="center">电话</th>
-				          <th data-field="email" data-align="center">电子邮箱</th>
-				          <th data-field="idnum" data-align="center">身份证号码</th>
-				          <th data-field="className" data-align="center">班级</th>
-				          <th data-field="nation" data-align="center">民族</th>
+				          <th data-field="id" data-align="center">记录编号</th>
+				          <th data-field="sname" data-align="center">姓名</th>
+				          <th data-field="date" data-align="center">日期</th>
+				          <th data-field="record" data-align="center">内容</th>
+				          <th data-field="flag" data-formatter="flagFormatter" data-align="center">奖励/惩罚</th>
+				          <th data-field="place" data-align="center">单位/地点</th>
 				          <th data-field="" data-formatter="optionFormatter" data-align="center">操作</th>
 				        </tr>
 				      </thead>
