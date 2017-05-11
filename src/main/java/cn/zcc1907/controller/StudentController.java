@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +23,7 @@ import cn.zcc1907.service.StudentService;
 
 @Controller
 @RequestMapping("/student")
+@PreAuthorize("hasAnyRole('student')")
 public class StudentController {
 
 	@Resource

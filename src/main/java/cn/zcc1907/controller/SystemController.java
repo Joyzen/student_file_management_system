@@ -35,6 +35,16 @@ public class SystemController {
 		return "403";
 	}
 	
+	@RequestMapping("/404")
+	public String toNotFound(){
+		return "404";
+	}
+	
+	@RequestMapping("/500")
+	public String toServererror(){
+		return "500";
+	}
+	
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String toLogi(){
 		return "sign-in";

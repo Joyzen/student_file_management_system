@@ -15,8 +15,6 @@
 	        	<h1 class="page-title">用户信息</h1>
 				<div class="btn-toolbar">
 				    <button id="newButton" class="btn btn-primary"><i class="icon-plus"></i>新增用户</button>
-				    <button class="btn">Import</button>
-				    <button class="btn">Export</button>
 				  	<div class="btn-group"></div>
 				</div>
 				<div class="well">
@@ -30,7 +28,8 @@
 				          <th>邮箱</th>
 				          <th>电话</th>
 				          <th>状态</th>
-				          <th style="width: 26px;"></th>
+				          <th>权限</th>
+				          <th style="width: 26px;">修改/删除</th>
 				        </tr>
 				      </thead>
 				      <tbody>
@@ -42,6 +41,7 @@
 				          <td th:text="${user.email}">邮箱</td>
 				          <td th:text="${user.phone}">电话</td>
 				          <td th:text="${user.useFlag}==1?'启用':'停用'">状态</td>
+				          <td><button class="btn" th:value="${user.userId}" onclick="modiPower(this)"><i class="icon-cog"></i></button></td>
 				          <td width="50px">
 				              <a th:href="@{/user/user?(userId=${user.userId})}">  <i class="icon-pencil"></i></a>
 				              <a th:href="'javascript:remove(' + ${user.userId} + ')'"
@@ -65,8 +65,9 @@
         </div>
     </div>
     <footer  th:include="index::footer"></footer>
+    
     <script th:inline="javascript">
-    	$(function(){
+    	/*  $(function(){
     		$("a").each(function(){//设置页数栏样式
        			if($(this).html()=='[[${pageNum}]]'){
        				$(this).parent().attr("class","active");
@@ -74,7 +75,7 @@
        			}
     		})
     		
-    	})
+    	}) */ 
    		function remove(id) {
    			$.alert({
 				title:'',
@@ -107,6 +108,39 @@
     	$("#newButton").click(()=>{
     		location.href=[[@{/user/toadd}]];
     	})
+    	function modiPower(obj){
+    		
+    		$.confirm({
+      			title:'',
+      			content:'url:powerform.html',
+      			type:'blue',
+    			animation: 'top',
+    			onContentReady:()=>{
+    				$('.selectpicker').selectpicker('show')
+    			},
+    			buttons:{
+    				提交:{
+    					btnClass:'btn btn-danger',
+    					action:()=>{
+    						var data = $('#roleForm').serializeArray();
+    						$.post([[@{/user/updaterole}]],data,(result)=>{
+    							if(result=='success'){
+    								alertSuccess('修改成功！');
+    								$('#tablelist').bootstrapTable('refresh');
+    							}else{
+    								alertFail('失败！');
+    							}
+    						})
+    					},
+    				},
+    				取消:{
+    					btnClass:'btn',
+    				}
+    			},
+    			boxWidth: '400px',
+    		    useBootstrap: false,
+      		})
+    	}
     </script>
   </body>
 </html>

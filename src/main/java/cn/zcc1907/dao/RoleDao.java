@@ -42,4 +42,8 @@ public interface RoleDao {
 	 */
 	public List<Menu> selectRoleByUserAccount(String userAccount);
 	
+	public int insertUserRole(Map<String,String> map);
+	
+	public int delUserRole(String userId);
+	
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,11 +23,11 @@ import cn.zcc1907.dao.ClassDao;
 
 @Controller
 @RequestMapping("/class")
+@PreAuthorize("hasAnyRole('class')")
 public class ClassController {
 
 	@Resource
 	ClassDao cd;
-	
 	@RequestMapping(value="/page",method=RequestMethod.GET)
 	public String toPage(){
 		return "class/class";

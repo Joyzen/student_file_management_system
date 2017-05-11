@@ -38,4 +38,6 @@ public interface UserService extends UserDetailsService {
 	 */
 	public boolean addUser(UserBean userBean);
 	
+	public void updateUserRole(String userId,String[] powers);
+	
 }

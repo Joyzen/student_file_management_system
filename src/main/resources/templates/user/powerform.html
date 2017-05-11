@@ -1,0 +1,52 @@
+<form id="roleForm" method="post" class="form-horizontal">
+
+	<div class="control-group">
+	    <label class="control-label">姓名：</label>
+	    <div class="controls">
+	    	<span type="text" th:text="${userName}" class="input-medium uneditable-input"></span>
+	    </div>
+    </div>
+	
+	<div class="control-group">
+	    <label class="control-label">权限：</label>
+	    <div class="controls">
+	    	<label class="checkbox inline">
+  				<input type="checkbox" name="roles" value="7"/>用户管理
+			</label>
+			<label class="checkbox inline">
+			  <input type="checkbox" name="roles" value="4"/>专业管理
+			</label>
+		</div>
+		<div class="controls">
+			<label class="checkbox inline">
+			  <input type="checkbox" name="roles" value="1"/>班级管理
+			</label>
+	    	<label class="checkbox inline">
+  				<input type="checkbox" name="roles" value="6"/>学生管理
+			</label>
+		</div>
+		<div class="controls">
+			<label class="checkbox inline">
+			  <input type="checkbox" name="roles" value="2"/>教育经历管理
+			</label>
+			<label class="checkbox inline">
+			  <input type="checkbox" name="roles" value="5"/>奖惩管理
+			</label>
+	    </div>
+    </div>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <input type="hidden" name="userId" th:value="${userId}"/>
+</form>
+<script th:inline="javascript">
+	var roles = [[${roles}]];
+	roles.forEach(function(roleId){
+		console.log('正在循环权限编号：'+roleId)
+		$('input[name="roles"]').each(function(){
+			$that = $(this)
+			console.log('该标签：'+$(this).val())
+			if($(this).val()==roleId){
+				$that.attr("checked","checked")
+			}
+		})
+	})
+</script>

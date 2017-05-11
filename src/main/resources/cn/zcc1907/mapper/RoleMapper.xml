@@ -37,5 +37,11 @@
 	<update id="updateRole" parameterType="RoleBean">
 		update role set roleName=#{roleName},#{remark} where roleId=#{roleId};
 	</update>
+	<insert id="insertUserRole" parameterType="Map">
+		insert into userrole values(null,#{userId},#{roleId});
+	</insert>
+	<delete id="delUserRole">
+		delete from userrole where userId=#{userId};
+	</delete>
 
 </mapper>

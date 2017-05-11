@@ -1,5 +1,6 @@
 package cn.zcc1907.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
+import cn.zcc1907.bean.RoleBean;
 import cn.zcc1907.bean.UserBean;
 import cn.zcc1907.service.UserService;
 import cn.zcc1907.util.Configs;
 
 @Controller
 @RequestMapping("/user")
+@PreAuthorize("hasAnyRole('user')")
 public class UserController {
 	
 	private static final Log logger = LogFactory.getLog(UserController.class);
@@ -96,6 +100,20 @@ public class UserController {
 	public String form(){
 		return "user/form";
 	}
+	@RequestMapping(value="powerform",method=RequestMethod.GET)
+	public String powerform(String userId,Model model){
+		UserBean user = new UserBean();
+		user.setUserId(userId);
+		user = us.getUserList(user).get(0);
+		List<String> ls = new ArrayList<String>();
+		for(RoleBean role:user.getRoles()){
+			ls.add(role.getRoleId());
+		}
+		model.addAttribute("userId", user.getUserId());
+		model.addAttribute("userName", user.getUserName());
+		model.addAttribute("roles",ls);
+		return "user/powerform";
+	}
 	
 	@RequestMapping(value="updatePassword")
 	@ResponseBody
@@ -161,6 +179,13 @@ public class UserController {
 		map.put("userId", user.getUserId());
 		
 		return map;
+	}
+	
+	@RequestMapping(value="/updaterole",method=RequestMethod.POST)
+	@ResponseBody
+	public String role(String userId,String[] roles){
+		us.updateUserRole(userId, roles);
+		return "success";
 	}
 	
 }
