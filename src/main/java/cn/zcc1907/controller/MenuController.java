@@ -18,7 +18,6 @@ import cn.zcc1907.service.MenuService;
 
 @Controller
 @RequestMapping("/menu")
-@PreAuthorize("hasAnyRole('menu')")
 public class MenuController {
 
 	private final static Logger logger = LoggerFactory.getLogger(MenuController.class);

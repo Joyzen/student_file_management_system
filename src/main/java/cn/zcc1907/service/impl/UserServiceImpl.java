@@ -40,9 +40,8 @@ public class UserServiceImpl implements UserService {
 				System.out.println(role.getRoleName());
 				authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
 			}
-			//return lu.get(0);
-			return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-	                authorities);
+			return new org.springframework.security.core.userdetails.User(user.getUsername(),
+					user.getPassword(),authorities);
 		}else if(lu.size()>1){
 			throw new RuntimeException("系统错误，用户名重复！");
 		}

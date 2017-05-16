@@ -40,10 +40,8 @@
 <script th:inline="javascript">
 	var roles = [[${roles}]];
 	roles.forEach(function(roleId){
-		console.log('正在循环权限编号：'+roleId)
 		$('input[name="roles"]').each(function(){
 			$that = $(this)
-			console.log('该标签：'+$(this).val())
 			if($(this).val()==roleId){
 				$that.attr("checked","checked")
 			}

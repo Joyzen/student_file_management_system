@@ -94,6 +94,7 @@
 		    			$.post([[@{/user/delete}]],data,(result)=>{
 		    				if(result=='success'){
 		    					alertSuccess("删除成功");
+		    					location.reload()
 		    				}else if(result=="fail"){
 		    					alertFail("删除失败");
 		    				}
@@ -109,10 +110,9 @@
     		location.href=[[@{/user/toadd}]];
     	})
     	function modiPower(obj){
-    		
     		$.confirm({
       			title:'',
-      			content:'url:powerform.html',
+      			content:'url:powerform.html?userId='+obj.value,
       			type:'blue',
     			animation: 'top',
     			onContentReady:()=>{
