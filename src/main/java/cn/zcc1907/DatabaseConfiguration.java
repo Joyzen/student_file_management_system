@@ -9,6 +9,7 @@ import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.context.EnvironmentAware;
@@ -23,8 +24,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.PageHelper;
-
-import cn.zcc1907.util.SpringBootVFS;
 
 @Configuration
 @EnableTransactionManagement
@@ -74,8 +73,8 @@ public class DatabaseConfiguration implements EnvironmentAware  {
 
     @Bean(name="sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory() throws Exception { 
-      /**
-       * 重写VFS类，解决打包成jar后不能扫描bean的问题
+      /*
+        重写VFS类，解决打包成jar后不能扫描bean的问题
        */
       VFS.addImplClass(SpringBootVFS.class);
       
